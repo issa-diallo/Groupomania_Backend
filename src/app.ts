@@ -1,22 +1,20 @@
 import express from 'express'
-import config from 'config'
+import 'dotenv/config'
 import logger from './utils/logger'
 import { Sequelize } from 'sequelize'
 
-const port = config.get<number>('port')
 const app = express()
 
-const MYSQL_HOST = config.get<string>('MYSQL_HOST')
-const MYSQL_USER = config.get<string>('MYSQL_USER')
-const MYSQL_PASSWORD = config.get<string>('MYSQL_PASSWORD')
-const MYSQL_DATABASE = config.get<string>('MYSQL_DATABASE')
-const MYSQL_PORT = config.get<number>('MYSQL_PORT')
-
-const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
-  host: MYSQL_HOST,
-  dialect: 'mysql',
-  port: MYSQL_PORT,
-})
+const sequelize = new Sequelize(
+  process.env.MYSQL_DATABASE,
+  process.env.MYSQL_USER,
+  process.env.MYSQL_PASSWORD,
+  {
+    host: process.env.MYSQL_HOST,
+    dialect: 'mysql',
+    port: 3310,
+  }
+)
 
 const connexion = async () => {
   try {
@@ -29,6 +27,6 @@ const connexion = async () => {
 
 connexion()
 
-app.listen(port, () => {
-  logger.info(`Listening on port at http://localhost:${port}`)
+app.listen(process.env.PORT, () => {
+  logger.info(`Listening on port at http://localhost:${process.env.PORT}`)
 })
