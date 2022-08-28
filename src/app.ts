@@ -4,6 +4,8 @@ import logger from './utils/logger'
 import userModel from './models/user'
 import { Sequelize } from 'sequelize-typescript'
 
+import userRoutes from './routes/userRoutes'
+
 const app = express()
 
 const sequelize = new Sequelize({
@@ -13,6 +15,7 @@ const sequelize = new Sequelize({
   username: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   models: [userModel],
+  logging: false,
 })
 
 const connexion = async () => {
@@ -29,6 +32,10 @@ const connexion = async () => {
 
 connexion()
 
-app.listen(process.env.PORT, () => {
-  logger.info(`Listening on port at http://localhost:${process.env.PORT}`)
-})
+// routes
+
+app.use(express.json())
+
+app.use('/api/v1/users', userRoutes)
+
+export default app
