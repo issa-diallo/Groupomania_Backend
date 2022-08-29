@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt'
  */
 export const signUp: RequestHandler = async (req, res) => {
   const user = {
-    ...req.body,
+    email: req.body.email,
     password: await bcrypt.hash(req.body.password, 10),
   }
   const newUser = await User.create(user)

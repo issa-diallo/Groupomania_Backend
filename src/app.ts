@@ -24,7 +24,7 @@ const connexion = async () => {
     logger.info(
       `Connection has ${process.env.MYSQL_DATABASE} been established successfully.`
     )
-    await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
+    // await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
   } catch (error) {
     logger.fatal('Unable to connect to the database:', error)
   }
@@ -32,10 +32,15 @@ const connexion = async () => {
 
 connexion()
 
-// routes
-
+/**
+ * To handle the POST request coming from the front-end application,
+ * we need to extract the JSON body.
+ * For this, you just need a very simple middleware,
+ * provided by the Express framework.
+ */
 app.use(express.json())
 
+// routes
 app.use('/api/v1/users', userRoutes)
 
 export default app
