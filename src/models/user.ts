@@ -5,8 +5,12 @@ import {
   Unique,
   NotEmpty,
   AllowNull,
+  DefaultScope,
 } from 'sequelize-typescript'
 
+@DefaultScope(() => ({
+  attributes: ['id', 'email', 'createdAt', 'updatedAt'],
+}))
 @Table
 class User extends Model {
   @Unique
