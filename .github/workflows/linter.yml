@@ -1,10 +1,9 @@
 name: Linter
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run the linter 
+      - name: Run the linter
         run: yarn lint
 
       - name: Run the format
