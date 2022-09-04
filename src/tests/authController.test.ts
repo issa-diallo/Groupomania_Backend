@@ -72,4 +72,22 @@ describe('User auth API', () => {
       expect(response.headers['set-cookie'][0].startsWith('jwt=')).toBeTruthy()
     })
   })
+  describe('User Logout', () => {
+    test('should destroy cookies and redirect /', async () => {
+      let userList = await User.findAll()
+      expect(userList.length).toBe(0)
+
+      await User.create({
+        email: 'user1@mail.com',
+        password: await passwordHashed('P4ssword'),
+      })
+
+      userList = await User.findAll()
+      expect(userList.length).toBe(1)
+
+      const response = await request(app).get('/api/v1/users/logout')
+      expect(response.headers['set-cookie'][0]).toMatch('Max-Age=0;')
+      expect(response.redirect).toBeTruthy()
+    })
+  })
 })
