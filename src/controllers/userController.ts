@@ -6,7 +6,7 @@ import User from '../models/user'
  * @Route /api/v1/users/ - GET
  */
 export const getAllUsers: RequestHandler = async (req, res) => {
-  const users = await User.findAll()
+  const users = await User.findAll({ attributes: { exclude: ['password'] } })
   res.status(200).json(users)
 }
 
@@ -16,7 +16,9 @@ export const getAllUsers: RequestHandler = async (req, res) => {
  */
 export const userInfo: RequestHandler = async (req, res, next) => {
   const paramsId = req.params.id
-  const user: User = await User.findByPk(paramsId)
+  const user: User = await User.findByPk(paramsId, {
+    attributes: { exclude: ['password'] },
+  })
   if (!user) {
     res.status(404).json({ message: 'Not Found' })
     return next()
@@ -30,7 +32,9 @@ export const userInfo: RequestHandler = async (req, res, next) => {
  */
 export const updateUser: RequestHandler = async (req, res) => {
   const paramsId = req.params.id
-  const user: User = await User.findByPk(paramsId)
+  const user: User = await User.findByPk(paramsId, {
+    attributes: { exclude: ['password'] },
+  })
   await user.update({
     ...req.body,
   })
@@ -43,7 +47,9 @@ export const updateUser: RequestHandler = async (req, res) => {
  */
 export const deleteUser: RequestHandler = async (req, res) => {
   const paramsId = req.params.id
-  const user: User = await User.findByPk(paramsId)
+  const user: User = await User.findByPk(paramsId, {
+    attributes: { exclude: ['password'] },
+  })
   await user.destroy()
   res.status(204).json()
 }
