@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { signUp } from '../controllers/authController'
+import { signUp, signIn } from '../controllers/authController'
 import {
   getAllUsers,
   userInfo,
@@ -11,6 +11,7 @@ const router = Router()
 
 // auth
 router.post('/register', signUp)
+router.post('/login', signIn)
 
 // user DB
 router.get('/', getAllUsers)
