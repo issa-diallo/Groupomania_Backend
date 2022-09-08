@@ -1,7 +1,11 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import 'dotenv/config'
 import { connexion } from './database/sequelizeDb'
 import userRoutes from './routes/userRoutes'
+import { requireAuth } from './middleware/auth'
+import { Response } from 'express'
+import { RequestAuth } from './authentification/types'
 const app = express()
 
 /**
@@ -10,15 +14,14 @@ const app = express()
  */
 connexion()
 
-/**
- * To handle the POST request coming from the front-end application,
- * we need to extract the JSON body.
- * For this, you just need a very simple middleware,
- * provided by the Express framework.
- */
+// middleware
 app.use(express.json())
+app.use(cookieParser())
 
 // routes
+app.use('/jwtid', requireAuth, (req: RequestAuth, res: Response) => {
+  res.status(200).send(res.locals.userId)
+})
 app.use('/api/v1/users', userRoutes)
 
 export default app

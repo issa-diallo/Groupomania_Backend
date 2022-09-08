@@ -32,12 +32,15 @@ export const signIn: RequestHandler = async (req, res) => {
       .status(401)
       .json({ message: 'Sorry, the email or password is incorrect!' })
   }
-  // time cookie
-  const maxAge = 3 * 24 * 60 * 60 * 1000
+  const maxAge = 60 * 60 * 24 * 1000
   // create a token with the userId and the secret key
   const token = createToken(user.id)
-  res.cookie('jwt', token, { httpOnly: true, maxAge })
-  res.status(200).json({ user: user.id })
+  // Insert token in cookie
+  res.cookie('jwt', token, {
+    httpOnly: true,
+    maxAge,
+  })
+  res.status(200).json({ userId: user.id, token })
 }
 
 /**
