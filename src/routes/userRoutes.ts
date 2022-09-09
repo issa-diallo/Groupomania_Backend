@@ -6,6 +6,7 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/userController'
+import { auth } from '../middleware/auth'
 
 const router = Router()
 
@@ -15,9 +16,9 @@ router.post('/login', signIn)
 router.get('/logout', logout)
 
 // user DB
-router.get('/', getAllUsers)
-router.get('/:id', userInfo)
-router.put('/:id', updateUser)
-router.delete('/:id', deleteUser)
+router.get('/', auth, getAllUsers)
+router.get('/:id', auth, userInfo)
+router.put('/:id', auth, updateUser)
+router.delete('/:id', auth, deleteUser)
 
 export default router

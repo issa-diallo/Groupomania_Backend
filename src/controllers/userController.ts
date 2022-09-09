@@ -1,20 +1,25 @@
-import { RequestHandler } from 'express'
+import { Response, Request, NextFunction } from 'express'
+import { RequestAuth } from '../authentification/types'
 import User from '../models/user'
 
 /**
  * Get all users
  * @Route /api/v1/users/ - GET
  */
-export const getAllUsers: RequestHandler = async (req, res) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   const users = await User.findAll({ attributes: { exclude: ['password'] } })
   res.status(200).json(users)
 }
 
 /**
  * Get a user
- * @Route /api/v1/users/ - GET
+ * @Route /api/v1/users/:id - GET
  */
-export const userInfo: RequestHandler = async (req, res, next) => {
+export const userInfo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const paramsId = req.params.id
   const user: User = await User.findByPk(paramsId, {
     attributes: { exclude: ['password'] },
@@ -30,7 +35,7 @@ export const userInfo: RequestHandler = async (req, res, next) => {
  * Update a user
  * @Route /api/v1/users/:id - PUT
  */
-export const updateUser: RequestHandler = async (req, res) => {
+export const updateUser = async (req: RequestAuth, res: Response) => {
   const paramsId = req.params.id
   const user: User = await User.findByPk(paramsId, {
     attributes: { exclude: ['password'] },
@@ -45,7 +50,7 @@ export const updateUser: RequestHandler = async (req, res) => {
  * Delete a user
  * @Route /api/v1/users/:id - DELETE
  */
-export const deleteUser: RequestHandler = async (req, res) => {
+export const deleteUser = async (req: RequestAuth, res: Response) => {
   const paramsId = req.params.id
   const user: User = await User.findByPk(paramsId, {
     attributes: { exclude: ['password'] },

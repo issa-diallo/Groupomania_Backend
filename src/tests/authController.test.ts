@@ -54,7 +54,7 @@ describe('User auth API', () => {
         email: 'user1@mail.com',
         password: 'P4ssword',
       })
-    test('should return 200 and cookies', async () => {
+    test('should return 200 and token and cookies', async () => {
       let userList = await User.findAll()
       expect(userList.length).toBe(0)
 
@@ -68,8 +68,10 @@ describe('User auth API', () => {
 
       const response = await postLoginUser()
       expect(response.status).toBe(200)
-      expect(response.body).toHaveProperty('user')
-      expect(response.headers['set-cookie'][0].startsWith('jwt=')).toBeTruthy()
+      expect(response.body).toEqual({
+        userId: expect.any(Number),
+        token: expect.any(String),
+      })
     })
   })
   describe('User Logout', () => {
@@ -86,6 +88,7 @@ describe('User auth API', () => {
       expect(userList.length).toBe(1)
 
       const response = await request(app).get('/api/v1/users/logout')
+      expect(response.body).toStrictEqual({})
       expect(response.headers['set-cookie'][0]).toMatch('Max-Age=0;')
       expect(response.redirect).toBeTruthy()
     })
