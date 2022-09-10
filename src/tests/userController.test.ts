@@ -43,7 +43,7 @@ describe('User API', () => {
   test('should return 404 if user not found', async () => {
     const response = await request(app).get('/api/v1/users/99999')
     expect(response.status).toBe(404)
-    expect(response.body.message).toBe('Not Found')
+    expect(response.body.message).toBe('User not Found')
   })
 
   test('should updated a user in DB --> PUT /api/v1/users/id', async () => {

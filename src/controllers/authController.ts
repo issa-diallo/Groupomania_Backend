@@ -14,8 +14,12 @@ export const signUp: RequestHandler = async (req, res) => {
     email: req.body.email,
     password: await passwordHashed(req.body.password),
   }
-  const newUser = await User.create(user)
-  return res.status(201).json({ user: newUser.id, message: 'User created' })
+  try {
+    const newUser = await User.create(user)
+    return res.status(201).json({ user: newUser.id, message: 'User created' })
+  } catch (error) {
+    return res.status(500).send({ error })
+  }
 }
 
 /**
@@ -23,8 +27,9 @@ export const signUp: RequestHandler = async (req, res) => {
  */
 export const signIn: RequestHandler = async (req, res) => {
   const user = await User.findOne({ where: { email: req.body.email } })
-  // the compare function of bcrypt to compare the password entered by the user with the hash stored in the database and  true or false
-
+  /* the compare function of bcrypt to compare the password entered
+   * by the user with the hash stored in the database and  true or false
+   */
   const isPasswordValid =
     user && (await compareHashed(req.body.password, user.password))
   if (!isPasswordValid) {

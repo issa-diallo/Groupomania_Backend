@@ -20,41 +20,69 @@ export const userInfo = async (
   res: Response,
   next: NextFunction
 ) => {
-  const paramsId = req.params.id
-  const user: User = await User.findByPk(paramsId, {
-    attributes: { exclude: ['password'] },
-  })
-  if (!user) {
-    res.status(404).json({ message: 'Not Found' })
-    return next()
+  try {
+    const paramsId = req.params.id
+    const user: User = await User.findByPk(paramsId, {
+      attributes: { exclude: ['password'] },
+    })
+    if (!user) {
+      res.status(404).send({ message: 'User not Found' })
+      return next()
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(500).json({ message: error })
   }
-  res.status(200).json(user)
 }
 
 /**
  * Update a user
  * @Route /api/v1/users/:id - PUT
  */
-export const updateUser = async (req: RequestAuth, res: Response) => {
-  const paramsId = req.params.id
-  const user: User = await User.findByPk(paramsId, {
-    attributes: { exclude: ['password'] },
-  })
-  await user.update({
-    ...req.body,
-  })
-  res.status(200).json(user)
+export const updateUser = async (
+  req: RequestAuth,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const paramsId = req.params.id
+    const user: User = await User.findByPk(paramsId, {
+      attributes: { exclude: ['password'] },
+    })
+    if (!user) {
+      res.status(404).send({ message: 'User not Found' })
+      return next()
+    }
+    await user.update({
+      ...req.body,
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
 }
 
 /**
  * Delete a user
  * @Route /api/v1/users/:id - DELETE
  */
-export const deleteUser = async (req: RequestAuth, res: Response) => {
-  const paramsId = req.params.id
-  const user: User = await User.findByPk(paramsId, {
-    attributes: { exclude: ['password'] },
-  })
-  await user.destroy()
-  res.status(204).json()
+export const deleteUser = async (
+  req: RequestAuth,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const paramsId = req.params.id
+    const user: User = await User.findByPk(paramsId, {
+      attributes: { exclude: ['password'] },
+    })
+    if (!user) {
+      res.status(404).send({ message: 'User not Found' })
+      return next()
+    }
+    await user.destroy()
+    res.status(204).json()
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
 }
