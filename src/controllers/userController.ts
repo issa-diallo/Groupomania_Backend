@@ -1,6 +1,8 @@
 import { Response, Request, NextFunction } from 'express'
+import { userAllowedOr401 } from '../authentification/userNotAllowed'
 import { RequestAuth } from '../authentification/types'
 import User from '../models/user'
+import logger from '../utils/logger'
 
 /**
  * Get all users
@@ -16,7 +18,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
  * @Route /api/v1/users/:id - GET
  */
 export const userInfo = async (
-  req: Request,
+  req: RequestAuth,
   res: Response,
   next: NextFunction
 ) => {
@@ -29,10 +31,13 @@ export const userInfo = async (
       res.status(404).send({ message: 'User not Found' })
       return next()
     }
+    userAllowedOr401(user, req.auth.userId, res, next)
     res.status(200).json(user)
   } catch (error) {
+    logger.error(error)
     res.status(500).json({ message: error })
   }
+  next()
 }
 
 /**
@@ -53,6 +58,7 @@ export const updateUser = async (
       res.status(404).send({ message: 'User not Found' })
       return next()
     }
+    userAllowedOr401(user, req.auth.userId, res, next)
     await user.update({
       ...req.body,
     })
@@ -60,6 +66,7 @@ export const updateUser = async (
   } catch (error) {
     res.status(500).json({ message: error })
   }
+  next()
 }
 
 /**
@@ -80,9 +87,11 @@ export const deleteUser = async (
       res.status(404).send({ message: 'User not Found' })
       return next()
     }
+    userAllowedOr401(user, req.auth.userId, res, next)
     await user.destroy()
     res.status(204).json()
   } catch (error) {
     res.status(500).json({ message: error })
   }
+  next()
 }

@@ -6,7 +6,10 @@ import logger from '../utils/logger'
 export const auth = (req: RequestAuth, res: Response, next: NextFunction) => {
   const token = req.cookies.jwt
   if (!token) {
-    return next()
+    res
+      .status(401)
+      .json({ message: 'you did not provide an authentication token' })
+    next()
   } else {
     // Verify the token.
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
