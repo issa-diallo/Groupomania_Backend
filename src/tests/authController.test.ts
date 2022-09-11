@@ -12,6 +12,7 @@ describe('User auth API', () => {
   describe('User Registration', () => {
     const postValidUser = () =>
       request(app).post('/api/v1/users/register').send({
+        pseudo: 'dial95',
         email: 'user1@mail.com',
         password: 'P4ssword',
       })
@@ -59,6 +60,7 @@ describe('User auth API', () => {
       expect(userList.length).toBe(0)
 
       await User.create({
+        pseudo: 'dial95',
         email: 'user1@mail.com',
         password: await passwordHashed('P4ssword'),
       })
@@ -80,6 +82,7 @@ describe('User auth API', () => {
       expect(userList.length).toBe(0)
 
       await User.create({
+        pseudo: 'dial95',
         email: 'user1@mail.com',
         password: await passwordHashed('P4ssword'),
       })

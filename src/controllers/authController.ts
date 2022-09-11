@@ -6,16 +6,23 @@ import {
   passwordHashed,
 } from '../authentification/passwordBcrypt'
 
+export const createUser = async (
+  pseudo: string,
+  email: string,
+  password: string
+) =>
+  await User.create({ pseudo, email, password: await passwordHashed(password) })
+
 /**
  * @Route /api/v1/users/register - POST
  */
 export const signUp: RequestHandler = async (req, res) => {
-  const user = {
-    email: req.body.email,
-    password: await passwordHashed(req.body.password),
-  }
   try {
-    const newUser = await User.create(user)
+    const newUser = await createUser(
+      req.body.pseudo,
+      req.body.email,
+      req.body.password
+    )
     return res.status(201).json({ user: newUser.id, message: 'User created' })
   } catch (error) {
     return res.status(500).send({ error })
