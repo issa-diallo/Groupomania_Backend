@@ -9,7 +9,8 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "lint": "eslint --fix . src/",
     "format": "prettier --write src/**/*.{ts,js}",
-    "test": "jest --watch --detectOpenHandles" 
+    "test": "jest --watch --detectOpenHandles ",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --watchAll=false src/tests/userController.test.ts --testNamePattern='should updated a user in DB --> PUT /api/v1/users/id'"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",
