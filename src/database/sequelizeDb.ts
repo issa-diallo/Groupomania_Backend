@@ -1,27 +1,29 @@
-import 'dotenv/config'
-import logger from '../utils/logger'
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import userModel from '../models/user'
+import postModel from '../models/post'
 import { Sequelize } from 'sequelize-typescript'
+dotenv.config({ override: true })
 
-const sequelize = new Sequelize({
+export const sequelize = new Sequelize({
   database: process.env.DATABASE,
   dialect: 'mysql',
   port: 3306,
   username: process.env.USER,
   password: process.env.MYSQL_ROOT_PASSWORD,
   host: process.env.HOST,
-  models: [userModel],
+  models: [userModel, postModel],
   logging: false,
 })
 
 export const connexion = async () => {
   try {
     await sequelize.authenticate()
-    logger.info(
+    console.info(
       `Connection has ${process.env.DATABASE} been established successfully.`
     )
     await sequelize.sync() // (force: true) completely deleted the table at each synchronization
   } catch (error) {
-    logger.fatal('Unable to connect to the database:', error)
+    console.error('Unable to connect to the database:', error)
+    throw error
   }
 }

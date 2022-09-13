@@ -39,10 +39,10 @@ class User extends Model {
   @Column
   picture: string
 
-  @Column(DataType.STRING)
+  @Column
   bio: string
 
-  @Column(DataType.STRING)
+  @Column
   likes: string
 
   @Default(false)

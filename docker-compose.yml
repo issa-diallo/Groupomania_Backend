@@ -13,7 +13,7 @@ services:
       HOST: db
       TOKEN_SECRET:
     volumes:
-      - './src/:/src/app:ro'
+      - './src/:/src/src/:ro'
   db:
     image: mysql
     restart: always
@@ -29,3 +29,5 @@ services:
     restart: always
     ports:
       - '8080:8080'
+volumes:
+  api_data:

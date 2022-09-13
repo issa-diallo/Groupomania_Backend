@@ -1,8 +1,8 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
-import 'dotenv/config'
 import { connexion } from './database/sequelizeDb'
 import userRoutes from './routes/userRoutes'
+import postRoutes from './routes/postRoutes'
 import { requireAuth } from './middleware/auth'
 import { Response } from 'express'
 import { RequestAuth } from './authentification/types'
@@ -13,7 +13,6 @@ const app = express()
  * to connect to a MySQL database
  */
 connexion()
-
 // middleware
 app.use(express.json())
 app.use(cookieParser())
@@ -23,5 +22,6 @@ app.use('/jwtid', requireAuth, (req: RequestAuth, res: Response) => {
   res.status(200).send(res.locals.userId)
 })
 app.use('/api/v1/users', userRoutes)
+app.use('/api/v1/post', postRoutes)
 
 export default app

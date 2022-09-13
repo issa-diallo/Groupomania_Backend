@@ -1,7 +1,6 @@
 import { Response, NextFunction } from 'express'
 import { RequestAuth, TokenInterface } from '../authentification/types'
 import jwt from 'jsonwebtoken'
-import logger from '../utils/logger'
 
 export const auth = (req: RequestAuth, res: Response, next: NextFunction) => {
   const token = req.cookies.jwt
@@ -37,11 +36,11 @@ export const requireAuth = (
     // We extract the user ID of our token
     const userId = (decodedToken as TokenInterface).userId
     res.locals.userId = { userId: userId }
-    logger.info(`The user n° ${userId} is connected...`)
+    console.info(`The user n° ${userId} is connected...`)
     next()
   } catch (error) {
-    logger.warn('No Token')
-    logger.error(error)
+    console.warn('No Token')
+    console.error(error)
     next()
   }
   next()

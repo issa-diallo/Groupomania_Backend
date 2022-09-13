@@ -2,10 +2,18 @@ import app from '../app'
 import request from 'supertest'
 import User from '../models/user'
 import { passwordHashed } from '../authentification/passwordBcrypt'
+import Post from '../models/post'
+import { sequelize } from '../database/sequelizeDb'
+import { connexion } from '../database/sequelizeDb'
 
 // cleaning the table before each test
-beforeEach(() => {
-  return User.destroy({ truncate: true })
+beforeEach(async () => {
+  try {
+    await connexion()
+    await sequelize.sync({ force: true })
+  } catch (error) {
+    console.error(error)
+  }
 })
 
 describe('User auth API', () => {
@@ -19,6 +27,7 @@ describe('User auth API', () => {
 
     test('validate user registration', async () => {
       // check if DB is empty
+
       let userList = await User.findAll()
       expect(userList.length).toBe(0)
       // Call our route

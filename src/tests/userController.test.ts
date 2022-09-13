@@ -2,8 +2,16 @@ import app from '../app'
 import request from 'supertest'
 import User from '../models/user'
 import { createUser } from '../controllers/authController'
+import { connexion, sequelize } from '../database/sequelizeDb'
 
-beforeEach(() => User.destroy({ truncate: true }))
+beforeEach(async () => {
+  try {
+    await connexion()
+    await sequelize.sync({ force: true })
+  } catch (error) {
+    console.error(error)
+  }
+})
 
 const login = (email: string, password: string) =>
   request(app).post('/api/v1/users/login').send({
@@ -48,8 +56,7 @@ describe('User API', () => {
         email: dbUser.email,
         picture: expect.any(String),
         bio: null,
-        followers: null,
-        following: null,
+        isAdmin: false,
         likes: null,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
@@ -72,8 +79,7 @@ describe('User API', () => {
       email: dbUser.email,
       picture: expect.any(String),
       bio: null,
-      followers: null,
-      following: null,
+      isAdmin: false,
       likes: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
@@ -100,8 +106,7 @@ describe('User API', () => {
       email: 'user10@mail.com',
       picture: expect.any(String),
       bio: null,
-      followers: null,
-      following: null,
+      isAdmin: false,
       likes: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),

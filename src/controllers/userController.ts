@@ -2,8 +2,7 @@ import { Response, Request } from 'express'
 import { userAllowedOr401 } from '../authentification/userNotAllowed'
 import { RequestAuth } from '../authentification/types'
 import User from '../models/user'
-import logger from '../utils/logger'
-import { getUser } from '../utils/helpers/getUser'
+import { getUser } from '../utils/helpers/functions'
 
 /**
  * Get all users
@@ -24,7 +23,7 @@ export const userInfo = async (req: RequestAuth, res: Response) => {
     userAllowedOr401(user, req.auth.userId, res)
     return res.status(200).json(user)
   } catch (error) {
-    logger.error(error)
+    console.error(error)
     return res.status(500)
   }
 }
@@ -42,7 +41,7 @@ export const updateUser = async (req: RequestAuth, res: Response) => {
     })
     return res.status(200).json(userUpdate)
   } catch (error) {
-    logger.error(error)
+    console.error(error)
     return res.status(500)
   }
 }
@@ -58,7 +57,7 @@ export const deleteUser = async (req: RequestAuth, res: Response) => {
     await user.destroy()
     return res.status(204).json()
   } catch (error) {
-    logger.error(error)
+    console.error(error)
     return res.status(500)
   }
 }
