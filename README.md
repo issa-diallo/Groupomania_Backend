@@ -1,17 +1,46 @@
-# GROUPOMANIA WITH NODE & EXPRESS
+# Api Rest with node & express
+The project consists in building an internal social network for employees. The aim of this tool is to facilitate interactions between colleagues.
 
 ## Url
+Add swagger here:
 
-## Install
+## Install && Run
+### Option 1
+System dependencies:
+- [Node.js](https://nodejs.org/en/)
+- [yarn](https://yarnpkg.com/)
 
-## :tada: Run
+Run:
+```sh
+yarn install
+yarn dev
+```
+### Option 2
+System dependencies:
+- [docker](https://www.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/install/)
+
+Run:
+```sh
+docker-compose build
+docker-compose up
+```
 
 ## :test_tube: Test
+```
+yarn test --watch --detectOpenHandles
+```
 
 ## :rotating_light: Linting
 
-## Learn More
+```sh
+yarn format
+yarn lint
 
-- You can learn more dotenv(https://github.com/motdotla/dotenv)
-- You can learn more on pino(https://github.com/pinojs/pino)
-- You can learn more on sequelize(https://sequelize.org/docs/v6/getting-started/#installing)
+```
+
+## Tech stack
+- [express](https://expressjs.com/)
+- [sequelize](https://sequelize.org/docs/v6/getting-started/#installing)
+- [sequelize-typescript](https://www.npmjs.com/package/sequelize-typescript#model-association)
+- [jest](https://jestjs.io/)
