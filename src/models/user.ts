@@ -50,6 +50,11 @@ class User extends Model {
 
   @Column(DataType.STRING)
   likes: [string]
+
+  @Default(false)
+  @AllowNull(false)
+  @Column
+  isAdmin: boolean
 }
 
 export default User

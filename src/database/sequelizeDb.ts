@@ -20,7 +20,7 @@ export const connexion = async () => {
     logger.info(
       `Connection has ${process.env.DATABASE} been established successfully.`
     )
-    // await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
+    await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
   } catch (error) {
     logger.fatal('Unable to connect to the database:', error)
   }
