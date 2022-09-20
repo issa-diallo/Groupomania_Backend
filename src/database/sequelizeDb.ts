@@ -8,7 +8,7 @@ const sequelize = new Sequelize({
   dialect: 'mysql',
   port: 3306,
   username: process.env.USER,
-  password: process.env.PASSWORD,
+  password: process.env.MYSQL_ROOT_PASSWORD,
   host: process.env.HOST,
   models: [userModel],
   logging: false,
@@ -20,7 +20,7 @@ export const connexion = async () => {
     logger.info(
       `Connection has ${process.env.DATABASE} been established successfully.`
     )
-    await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
+    await sequelize.sync() // (force: true) completely deleted the table at each synchronization
   } catch (error) {
     logger.fatal('Unable to connect to the database:', error)
   }

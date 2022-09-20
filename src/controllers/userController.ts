@@ -3,6 +3,7 @@ import { userAllowedOr401 } from '../authentification/userNotAllowed'
 import { RequestAuth } from '../authentification/types'
 import User from '../models/user'
 import logger from '../utils/logger'
+import { getUser } from '../utils/helpers/getUser'
 
 /**
  * Get all users
@@ -19,10 +20,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
  */
 export const userInfo = async (req: RequestAuth, res: Response) => {
   try {
-    const paramsId = req.params.id
-    const user: User = await User.findByPk(paramsId, {
-      attributes: { exclude: ['password'] },
-    })
+    const user: User = await getUser(req)
     userAllowedOr401(user, req.auth.userId, res)
     return res.status(200).json(user)
   } catch (error) {
@@ -37,10 +35,7 @@ export const userInfo = async (req: RequestAuth, res: Response) => {
  */
 export const updateUser = async (req: RequestAuth, res: Response) => {
   try {
-    const paramsId = req.params.id
-    const user: User = await User.findByPk(paramsId, {
-      attributes: { exclude: ['password'] },
-    })
+    const user: User = await getUser(req)
     userAllowedOr401(user, req.auth.userId, res)
     const userUpdate = await user.update({
       ...req.body,
@@ -58,10 +53,7 @@ export const updateUser = async (req: RequestAuth, res: Response) => {
  */
 export const deleteUser = async (req: RequestAuth, res: Response) => {
   try {
-    const paramsId = req.params.id
-    const user: User = await User.findByPk(paramsId, {
-      attributes: { exclude: ['password'] },
-    })
+    const user: User = await getUser(req)
     userAllowedOr401(user, req.auth.userId, res)
     await user.destroy()
     return res.status(204).json()

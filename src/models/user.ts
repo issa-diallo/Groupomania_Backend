@@ -43,13 +43,7 @@ class User extends Model {
   bio: string
 
   @Column(DataType.STRING)
-  followers: [string]
-
-  @Column(DataType.STRING)
-  following: [string]
-
-  @Column(DataType.STRING)
-  likes: [string]
+  likes: string
 
   @Default(false)
   @AllowNull(false)

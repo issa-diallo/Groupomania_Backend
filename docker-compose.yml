@@ -9,16 +9,17 @@ services:
       PORT: 3000
       DATABASE:
       USER:
-      PASSWORD:
+      MYSQL_ROOT_PASSWORD:
       HOST: db
       TOKEN_SECRET:
-
+    volumes:
+      - './src/:/src/app:ro'
   db:
     image: mysql
     restart: always
     environment:
       DATABASE:
-      PASSWORD:
+      MYSQL_ROOT_PASSWORD:
       HOST:
     ports:
       - '3306:3306'
