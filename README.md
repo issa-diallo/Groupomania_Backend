@@ -7,8 +7,8 @@ Add swagger here:
 ## Install && Run
 ### Option 1
 System dependencies:
-- [Node.js](https://nodejs.org/en/)
-- [yarn](https://yarnpkg.com/)
+- to install [Node.js](https://nodejs.org/en/)
+- to install [yarn](https://yarnpkg.com/)
 
 Run:
 ```sh
@@ -17,8 +17,8 @@ yarn dev
 ```
 ### Option 2
 System dependencies:
-- [docker](https://www.docker.com/)
-- [docker-compose](https://docs.docker.com/compose/install/)
+- to install [docker](https://www.docker.com/)
+- to install [docker-compose](https://docs.docker.com/compose/install/)
 
 Run:
 ```sh
