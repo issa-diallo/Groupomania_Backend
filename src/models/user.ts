@@ -8,7 +8,6 @@ import {
   IsEmail,
   IsLowercase,
   Length,
-  DataType,
   Default,
 } from 'sequelize-typescript'
 

@@ -7,7 +7,7 @@ services:
       - '3000:3000'
     environment:
       PORT: 3000
-      DATABASE:
+      MYSQL_DATABASE:
       USER:
       MYSQL_ROOT_PASSWORD:
       HOST: db
@@ -18,7 +18,7 @@ services:
     image: mysql
     restart: always
     environment:
-      DATABASE:
+      MYSQL_DATABASE:
       MYSQL_ROOT_PASSWORD:
       HOST:
     ports:

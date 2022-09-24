@@ -8,9 +8,9 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "lint": "eslint --fix src/",
-    "format": "prettier --write src/**/*.{ts,js} *.{md,yml}",
-    "test": "jest",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --watchAll=false"
+    "format": "prettier --write src/**/*.{ts,js} *.{md,yml} .github/**/*.yml",
+    "test": "jest --runInBand src/",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest src/ --runInBand --watchAll=false"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",

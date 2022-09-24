@@ -5,7 +5,7 @@ import { Sequelize } from 'sequelize-typescript'
 dotenv.config({ override: true })
 
 export const sequelize = new Sequelize({
-  database: process.env.DATABASE,
+  database: process.env.MYSQL_DATABASE,
   dialect: 'mysql',
   port: 3306,
   username: process.env.USER,
@@ -19,9 +19,9 @@ export const connexion = async () => {
   try {
     await sequelize.authenticate()
     console.info(
-      `Connection has ${process.env.DATABASE} been established successfully.`
+      `Connection has ${process.env.MYSQL_DATABASE} been established successfully.`
     )
-    await sequelize.sync() // (force: true) completely deleted the table at each synchronization
+    await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
   } catch (error) {
     console.error('Unable to connect to the database:', error)
     throw error
