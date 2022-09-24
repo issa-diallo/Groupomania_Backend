@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "lint": "eslint --fix . src/",
+    "lint": "eslint --fix src/",
     "format": "prettier --write src/**/*.{ts,js} *.{md,yml}",
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --watchAll=false"
