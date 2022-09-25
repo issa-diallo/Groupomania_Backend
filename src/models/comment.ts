@@ -4,37 +4,31 @@ import {
   Model,
   ForeignKey,
   BelongsTo,
-  HasMany,
   AllowNull,
 } from 'sequelize-typescript'
-import Comment from './comment'
-import Like from './like'
+import Post from './post'
 import User from './user'
 
 @Table
-class Post extends Model {
+class Comment extends Model {
   @ForeignKey(() => User)
   @AllowNull(false)
   @Column
   user_id: number
 
+  @ForeignKey(() => Post)
+  @AllowNull(false)
   @Column
-  message: string
+  post_id: number
 
   @Column
-  picture: string
-
-  @Column
-  video: string
+  text: string
 
   @BelongsTo(() => User)
   user: User
 
-  @HasMany(() => Like)
-  posts: Like[]
-
-  @HasMany(() => Comment)
-  comments: Comment[]
+  @BelongsTo(() => Post)
+  post: Post
 }
 
-export default Post
+export default Comment

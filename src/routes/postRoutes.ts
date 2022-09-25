@@ -16,6 +16,7 @@ router.get('/:id', auth, readPost)
 router.post('/', auth, createPost)
 router.put('/:id', auth, updatePost)
 router.delete('/:id', auth, deletePost)
+// likes
 router.post('/like/:id', auth, likePost)
 router.delete('/unlike/:id', auth, unLikePost)
 

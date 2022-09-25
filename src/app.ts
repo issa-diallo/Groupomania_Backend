@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser'
 import { connexion } from './database/sequelizeDb'
 import userRoutes from './routes/userRoutes'
 import postRoutes from './routes/postRoutes'
+import commentRoutes from './routes/commentRoutes'
 import { requireAuth } from './middleware/auth'
 import { Response } from 'express'
 import { RequestAuth } from './authentification/types'
@@ -23,5 +24,6 @@ app.use('/jwtid', requireAuth, (req: RequestAuth, res: Response) => {
 })
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/post', postRoutes)
+app.use('/api/v1/comments', commentRoutes)
 
 export default app

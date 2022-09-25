@@ -35,6 +35,7 @@ export const updatePost = async (req: Request, res: Response) => {
   })
   return res.status(200).json(postUpdate)
 }
+
 export const deletePost = async (req: Request, res: Response) => {
   const post: Post = await getPost(req)
   await post.destroy()

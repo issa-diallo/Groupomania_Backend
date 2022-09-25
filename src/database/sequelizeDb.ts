@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-d
 import userModel from '../models/user'
 import postModel from '../models/post'
 import likeModel from '../models/like'
+import comentModel from '../models/comment'
 import { Sequelize } from 'sequelize-typescript'
 dotenv.config({ override: true })
 
@@ -12,7 +13,7 @@ export const sequelize = new Sequelize({
   username: process.env.USER,
   password: process.env.MYSQL_ROOT_PASSWORD,
   host: process.env.HOST,
-  models: [userModel, postModel, likeModel],
+  models: [userModel, postModel, likeModel, comentModel],
   logging: false,
 })
 
