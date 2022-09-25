@@ -22,9 +22,6 @@ class Post extends Model {
   @Column
   video: string
 
-  @Column
-  likers: string
-
   @BelongsTo(() => User)
   user: User
 }

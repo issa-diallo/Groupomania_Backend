@@ -2,7 +2,6 @@ import app from '../app'
 import request from 'supertest'
 import User from '../models/user'
 import { passwordHashed } from '../authentification/passwordBcrypt'
-import Post from '../models/post'
 import { sequelize } from '../database/sequelizeDb'
 import { connexion } from '../database/sequelizeDb'
 
