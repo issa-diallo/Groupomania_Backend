@@ -57,7 +57,6 @@ describe('User API', () => {
         picture: expect.any(String),
         bio: null,
         isAdmin: false,
-        likes: null,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       },
@@ -80,7 +79,6 @@ describe('User API', () => {
       picture: expect.any(String),
       bio: null,
       isAdmin: false,
-      likes: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     })
@@ -107,7 +105,6 @@ describe('User API', () => {
       picture: expect.any(String),
       bio: null,
       isAdmin: false,
-      likes: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     })

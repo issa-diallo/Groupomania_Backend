@@ -9,7 +9,9 @@ import {
   IsLowercase,
   Length,
   Default,
+  HasMany,
 } from 'sequelize-typescript'
+import Post from './post'
 
 @Table
 class User extends Model {
@@ -41,13 +43,13 @@ class User extends Model {
   @Column
   bio: string
 
-  @Column
-  likes: string
-
   @Default(false)
   @AllowNull(false)
   @Column
   isAdmin: boolean
+
+  @HasMany(() => Post)
+  posts: Post[]
 }
 
 export default User
