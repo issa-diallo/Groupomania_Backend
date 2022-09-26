@@ -6,6 +6,7 @@ import comentModel from '../models/comment'
 import { Sequelize } from 'sequelize-typescript'
 dotenv.config({ override: true })
 
+// To connect to the database
 export const sequelize = new Sequelize({
   database: process.env.MYSQL_DATABASE,
   dialect: 'mysql',
@@ -17,6 +18,7 @@ export const sequelize = new Sequelize({
   logging: false,
 })
 
+// To test if the connection is OK
 export const connexion = async () => {
   try {
     await sequelize.authenticate()

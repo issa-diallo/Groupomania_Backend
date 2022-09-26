@@ -1,11 +1,17 @@
 import { Response, Request } from 'express'
 import Comment from '../models/comment'
 
+/**
+ * @Route /api/v1/comments
+ */
 export const commentAll = async (req: Request, res: Response) => {
   const comments = await Comment.findAll()
   res.status(200).json(comments)
 }
 
+/**
+ * @Route /api/v1/comments/:id
+ */
 export const createComment = async (req: Request, res: Response) => {
   const newComment = new Comment({
     user_id: parseInt(req.body.user_id),
@@ -16,6 +22,9 @@ export const createComment = async (req: Request, res: Response) => {
   return res.status(201).json(coment)
 }
 
+/**
+ * @Route /api/v1/comments/:id
+ */
 export const updateComment = async (req: Request, res: Response) => {
   const paramsId = req.params.id
   const comment: Comment = await Comment.findByPk(paramsId)
@@ -25,6 +34,9 @@ export const updateComment = async (req: Request, res: Response) => {
   return res.status(200).json(commentUpdated)
 }
 
+/**
+ * @Route /api/v1/comments/:id
+ */
 export const deleteComment = async (req: Request, res: Response) => {
   const paramsId = req.params.id
   const comment: Comment = await Comment.findByPk(paramsId)

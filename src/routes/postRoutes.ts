@@ -11,6 +11,7 @@ import { auth } from '../middleware/auth'
 
 const router = Router()
 
+// posts
 router.get('/', auth, readAllPost)
 router.get('/:id', auth, readPost)
 router.post('/', auth, createPost)
