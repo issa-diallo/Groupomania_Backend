@@ -39,7 +39,7 @@ docker-compose up
 ## :test_tube: Test
 
 ```
-yarn test --watch --detectOpenHandles
+yarn test
 ```
 
 ## :rotating_light: Linting
