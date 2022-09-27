@@ -1,8 +1,11 @@
 import { Response, Request } from 'express'
+import { RELATIVE_UPLOAD_POST_PATH } from '../utils/helpers/constants'
 import Post from '../models/post'
 import { getPost } from '../utils/helpers/functions'
+import fs from 'fs'
 
 /**
+ * Get all post
  * @Route /api/v1/post
  */
 export const readAllPost = async (req: Request, res: Response) => {
@@ -11,6 +14,7 @@ export const readAllPost = async (req: Request, res: Response) => {
 }
 
 /**
+ * Get a post
  * @Route /api/v1/post/:id
  */
 export const readPost = async (req: Request, res: Response) => {
@@ -19,16 +23,26 @@ export const readPost = async (req: Request, res: Response) => {
 }
 
 /**
+ * Create a post
  * @Route /api/v1/post
  */
 export const createPost = async (req: Request, res: Response) => {
-  const newPost = new Post({
-    user_id: req.body.user_id,
-    message: req.body.message,
-    picture: req.body.picture,
-    video: req.body.video,
-    likers: req.body.likers,
-  })
+  const newPost = new Post(
+    req.file
+      ? {
+          user_id: req.body.user_id,
+          message: req.body.message,
+          picture: `${req.protocol}://${req.get(
+            'host'
+          )}/${RELATIVE_UPLOAD_POST_PATH}${req.file.filename}`,
+          video: req.body.video,
+        }
+      : {
+          user_id: req.body.user_id,
+          message: req.body.message,
+          video: req.body.video,
+        }
+  )
   try {
     const post = await newPost.save()
     return res.status(201).json(post)
@@ -38,21 +52,49 @@ export const createPost = async (req: Request, res: Response) => {
 }
 
 /**
+ * Update a post
  * @Route /api/v1/post/:id
  */
 export const updatePost = async (req: Request, res: Response) => {
   const post: Post = await getPost(req)
+
+  const postObject = req.file
+    ? {
+        ...req.body,
+        picture: `${req.protocol}://${req.get(
+          'host'
+        )}/${RELATIVE_UPLOAD_POST_PATH}${req.file.filename}`,
+      }
+    : { ...req.body }
+
+  const filename = post.picture?.split(RELATIVE_UPLOAD_POST_PATH)[1]
+
+  // Delete the image from the images folder.
+  fs.unlink(`${RELATIVE_UPLOAD_POST_PATH}${filename}`, () => {
+    /**/
+  })
+
   const postUpdate = await post.update({
-    message: req.body.message,
+    ...postObject,
   })
   return res.status(200).json(postUpdate)
 }
 
 /**
+ * Delete a post
  * @Route /api/v1/post/:id
  */
 export const deletePost = async (req: Request, res: Response) => {
   const post: Post = await getPost(req)
+
+  const filename = post.picture?.split(RELATIVE_UPLOAD_POST_PATH)[1]
+
+  if (filename) {
+    // Delete the image from the images folder.
+    fs.unlink(`${RELATIVE_UPLOAD_POST_PATH}${filename}`, () => {
+      /**/
+    })
+  }
   await post.destroy()
   return res.status(204).json()
 }

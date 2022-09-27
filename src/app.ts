@@ -7,6 +7,8 @@ import commentRoutes from './routes/commentRoutes'
 import { requireAuth } from './middleware/auth'
 import { Response } from 'express'
 import { RequestAuth } from './authentification/types'
+import path from 'path'
+
 const app = express()
 
 /**
@@ -17,6 +19,8 @@ connexion()
 // middleware
 app.use(express.json())
 app.use(cookieParser())
+
+app.use('/images', express.static(path.join(__dirname, '/images')))
 
 // routes
 app.use('/jwtid', requireAuth, (req: RequestAuth, res: Response) => {
