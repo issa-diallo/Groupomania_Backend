@@ -56,3 +56,7 @@ yarn lint
 - [sequelize](https://sequelize.org/docs/v6/getting-started/#installing)
 - [sequelize-typescript](https://www.npmjs.com/package/sequelize-typescript#model-association)
 - [jest](https://jestjs.io/)
+- [JWT](https://github.com/auth0/node-jsonwebtoken)
+- [Multer](https://github.com/expressjs/multer)
+- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+- [CORS](https://github.com/expressjs/cors)
