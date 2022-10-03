@@ -7,6 +7,8 @@ import commentRoutes from './routes/commentRoutes'
 import { requireAuth } from './middleware/auth'
 import { Response } from 'express'
 import { RequestAuth } from './authentification/types'
+import cors from 'cors'
+
 const app = express()
 
 /**
@@ -14,7 +16,16 @@ const app = express()
  * to connect to a MySQL database
  */
 connexion()
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credential: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  methodes: 'GET,PUT,PATCH,POST,DELETE',
+}
 // middleware
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 
