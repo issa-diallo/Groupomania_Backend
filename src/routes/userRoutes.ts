@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import multerConfig from '../middleware/multer-config'
 import { signUp, signIn, logout } from '../controllers/authController'
 import {
   getAllUsers,
@@ -18,7 +19,7 @@ router.get('/logout', logout)
 // user DB
 router.get('/', auth, getAllUsers)
 router.get('/:id', auth, userInfo)
-router.put('/:id', auth, updateUser)
+router.put('/:id', auth, multerConfig, updateUser)
 router.delete('/:id', auth, deleteUser)
 
 export default router
