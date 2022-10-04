@@ -8,6 +8,8 @@ import { requireAuth } from './middleware/auth'
 import { Response } from 'express'
 import { RequestAuth } from './authentification/types'
 import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
+import swaggerDoc from './swagger'
 
 const app = express()
 
@@ -30,6 +32,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 // routes
+app.use('/documentations', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 app.use('/jwtid', requireAuth, (req: RequestAuth, res: Response) => {
   res.status(200).send(res.locals.userId)
 })

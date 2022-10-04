@@ -3,9 +3,9 @@
 The project consists in building an internal social network for employees. The aim of this tool is to facilitate interactions between colleagues.
 - Frontend is available is: https://github.com/issa-diallo/Groupomania_frontend
 
-## Url
+## Documentation Route
 
-Add swagger here:
+[Route documentations](http://localhost:3000/documentations/)
 
 ## Install && Run
 
