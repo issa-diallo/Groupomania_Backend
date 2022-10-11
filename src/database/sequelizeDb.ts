@@ -25,7 +25,7 @@ export const connexion = async () => {
     console.info(
       `Connection has ${process.env.MYSQL_DATABASE} been established successfully.`
     )
-    await sequelize.sync()
+    // await sequelize.sync()
     // await sequelize.sync({ force: true }) // (force: true) completely deleted the table at each synchronization
   } catch (error) {
     console.error('Unable to connect to the database:', error)

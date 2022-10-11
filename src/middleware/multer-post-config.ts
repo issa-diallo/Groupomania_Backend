@@ -41,7 +41,9 @@ const multerFilter = (
     callback(null, true)
   } else {
     callback(null, false)
-    return callback(new Error('Only .png, .jpg and .jpeg format allowed!'))
+    return callback(
+      new Error('Only .png, .jpg, .wbep, and .jpeg format allowed!')
+    )
   }
 }
 

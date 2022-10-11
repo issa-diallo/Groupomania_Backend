@@ -25,7 +25,7 @@ export const signUp: RequestHandler = async (req, res) => {
     )
     return res.status(201).json({ user: newUser.id, message: 'User created' })
   } catch (error) {
-    return res.status(500).send({ error })
+    return res.status(400).send({ error })
   }
 }
 
@@ -33,26 +33,30 @@ export const signUp: RequestHandler = async (req, res) => {
  * @Route /api/v1/users/login - POST
  */
 export const signIn: RequestHandler = async (req, res) => {
-  const user = await User.findOne({ where: { email: req.body.email } })
-  /* the compare function of bcrypt to compare the password entered
-   * by the user with the hash stored in the database and  true or false
-   */
-  const isPasswordValid =
-    user && (await compareHashed(req.body.password, user.password))
-  if (!isPasswordValid) {
-    res
-      .status(401)
-      .json({ message: 'Sorry, the email or password is incorrect!' })
+  try {
+    const user = await User.findOne({ where: { email: req.body.email } })
+    /* the compare function of bcrypt to compare the password entered
+     * by the user with the hash stored in the database and  true or false
+     */
+    const isPasswordValid =
+      user && (await compareHashed(req.body.password, user.password))
+    if (!isPasswordValid) {
+      res
+        .status(401)
+        .json({ message: 'Sorry, the email or password is incorrect!' })
+    }
+    const maxAge = 60 * 60 * 24 * 1000
+    // create a token with the userId and the secret key
+    const token = createToken(user.id)
+    // Insert token in cookie
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      maxAge,
+    })
+    res.status(200).json({ userId: user.id, token })
+  } catch (error) {
+    return res.status(500).send({ error })
   }
-  const maxAge = 60 * 60 * 24 * 1000
-  // create a token with the userId and the secret key
-  const token = createToken(user.id)
-  // Insert token in cookie
-  res.cookie('jwt', token, {
-    httpOnly: true,
-    maxAge,
-  })
-  res.status(200).json({ userId: user.id, token })
 }
 
 /**
