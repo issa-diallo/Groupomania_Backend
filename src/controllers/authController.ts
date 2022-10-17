@@ -5,6 +5,7 @@ import {
   compareHashed,
   passwordHashed,
 } from '../authentification/passwordBcrypt'
+import { signInErrors, signUpErrors } from '../utils/errors'
 
 export const createUser = async (
   pseudo: string,
@@ -25,7 +26,8 @@ export const signUp: RequestHandler = async (req, res) => {
     )
     return res.status(201).json({ user: newUser.id, message: 'User created' })
   } catch (error) {
-    return res.status(400).send({ error })
+    const err = signUpErrors(error)
+    return res.status(400).send({ err })
   }
 }
 
@@ -35,15 +37,16 @@ export const signUp: RequestHandler = async (req, res) => {
 export const signIn: RequestHandler = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email: req.body.email } })
+    if (!user) {
+      return res.status(400).json({ message: 'Désolé, email inconnu' })
+    }
     /* the compare function of bcrypt to compare the password entered
      * by the user with the hash stored in the database and  true or false
      */
     const isPasswordValid =
       user && (await compareHashed(req.body.password, user.password))
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ message: 'Sorry, the email or password is incorrect!' })
+      return res.status(400).json({ message: 'Le mot de passe est incorrect' })
     }
     // create a token with the userId and the secret key
     const token = createToken(user.id)
