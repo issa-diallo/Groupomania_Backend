@@ -42,11 +42,11 @@ describe('User API', () => {
 
   test('should return a array users --> GET /api/v1/users/', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const response = await request(app)
       .get('/api/v1/users/')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([
@@ -65,11 +65,11 @@ describe('User API', () => {
 
   test('should return only a user --> GET /api/v1/users/:id', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const response = await request(app)
       .get('/api/v1/users/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
@@ -86,14 +86,14 @@ describe('User API', () => {
 
   test('should updated a user in DB --> PUT /api/v1/users/id', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const userList = await User.findAll()
     expect(userList.length).toBe(1)
 
     const response = await request(app)
       .put('/api/v1/users/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         email: 'user10@mail.com',
       })
@@ -112,11 +112,11 @@ describe('User API', () => {
 
   test('should deleted a user in DB --> DELETE /api/v1/users/id', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const response = await request(app)
       .delete('/api/v1/users/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
     expect(response.status).toBe(204)
 
     const userList = await User.findAll()

@@ -30,7 +30,7 @@ describe('Like API', () => {
   })
   test('should add a like in db', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const likeList = await Like.findAll()
     expect(likeList.length).toBe(0)
@@ -45,7 +45,7 @@ describe('Like API', () => {
       .send({
         user_id: 1,
       })
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
@@ -59,7 +59,7 @@ describe('Like API', () => {
 
   test('should delete like in db', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     await Post.create({
       user_id: 1,
@@ -77,7 +77,7 @@ describe('Like API', () => {
       .send({
         user_id: 1,
       })
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
     expect(response.status).toBe(204)
 
     const userList = await Like.findAll()

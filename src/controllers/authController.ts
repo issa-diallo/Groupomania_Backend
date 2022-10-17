@@ -41,28 +41,15 @@ export const signIn: RequestHandler = async (req, res) => {
     const isPasswordValid =
       user && (await compareHashed(req.body.password, user.password))
     if (!isPasswordValid) {
-      res
+      return res
         .status(401)
         .json({ message: 'Sorry, the email or password is incorrect!' })
     }
-    const maxAge = 60 * 60 * 24 * 1000
     // create a token with the userId and the secret key
     const token = createToken(user.id)
-    // Insert token in cookie
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      maxAge,
-    })
+
     res.status(200).json({ userId: user.id, token })
   } catch (error) {
     return res.status(500).send({ error })
   }
-}
-
-/**
- * @Route /api/v1/users/logout - GET
- */
-export const logout: RequestHandler = async (req, res) => {
-  res.cookie('jwt', '', { maxAge: 1 })
-  res.redirect('/')
 }

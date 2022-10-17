@@ -32,7 +32,7 @@ describe('Comment API', () => {
   })
   test('should create a object Comment', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const CommentList = await Comment.findAll()
     expect(CommentList.length).toBe(0)
@@ -48,7 +48,7 @@ describe('Comment API', () => {
         user_id: 1,
         text: "commentaire d'un post !!",
       })
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(201)
     expect(response.body).toEqual({
@@ -63,7 +63,7 @@ describe('Comment API', () => {
 
   test('should return a array Comments', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const post = await Post.create({
       user_id: dbUser.id,
@@ -81,7 +81,7 @@ describe('Comment API', () => {
 
     const response = await request(app)
       .get('/api/v1/comments')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([
@@ -98,7 +98,7 @@ describe('Comment API', () => {
 
   test('should updated a Comment in DB', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     await Post.create({
       user_id: 1,
@@ -116,7 +116,7 @@ describe('Comment API', () => {
 
     const response = await request(app)
       .put('/api/v1/comments/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         text: "commentaire d'un post !!",
       })
@@ -133,7 +133,7 @@ describe('Comment API', () => {
 
   test('should deleted a Comment in DB', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     await Post.create({
       user_id: 1,
@@ -148,7 +148,7 @@ describe('Comment API', () => {
 
     const response = await request(app)
       .delete('/api/v1/comments/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
     expect(response.status).toBe(204)
 
     const userList = await Comment.findAll()

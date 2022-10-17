@@ -29,7 +29,7 @@ describe('Post API', () => {
   })
   test('should return a 201 & a object post --> post /api/v1/post/', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const postList = await Post.findAll()
     expect(postList.length).toBe(0)
@@ -40,7 +40,7 @@ describe('Post API', () => {
         user_id: 1,
         message: 'message post !!',
       })
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
     expect(response.status).toBe(201)
     expect(response.body).toEqual({
       id: expect.any(Number),
@@ -53,7 +53,7 @@ describe('Post API', () => {
 
   test('should return a array posts', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const newPost = await Post.create({
       user_id: 1,
@@ -62,7 +62,7 @@ describe('Post API', () => {
 
     const response = await request(app)
       .get('/api/v1/post/')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([
@@ -80,7 +80,7 @@ describe('Post API', () => {
 
   test('should return only a post', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const newPost = await Post.create({
       user_id: 1,
@@ -89,7 +89,7 @@ describe('Post API', () => {
 
     const response = await request(app)
       .get('/api/v1/post/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
@@ -105,7 +105,7 @@ describe('Post API', () => {
 
   test('should updated a post in DB', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     const newPost = await Post.create({
       user_id: 1,
@@ -117,7 +117,7 @@ describe('Post API', () => {
 
     const response = await request(app)
       .put('/api/v1/post/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         user_id: 1,
         message: 'deuxième post modifié!!',
@@ -136,7 +136,7 @@ describe('Post API', () => {
 
   test('should deleted a post in DB', async () => {
     const loginUser = await login(user.email, user.password)
-    const cookies = loginUser.headers['set-cookie']
+    const token = loginUser.body.token
 
     await Post.create({
       user_id: 1,
@@ -145,7 +145,7 @@ describe('Post API', () => {
 
     const response = await request(app)
       .delete('/api/v1/post/1')
-      .set('Cookie', cookies)
+      .set('Authorization', `Bearer ${token}`)
     expect(response.status).toBe(204)
 
     const userList = await Post.findAll()

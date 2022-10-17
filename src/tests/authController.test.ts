@@ -47,15 +47,6 @@ describe('User auth API', () => {
       // makes sure the password is not plain text (it's hashed)
       expect(savedUser.password).not.toBe('P4ssword')
     })
-
-    // test('should email unique', async () => {
-    //   const newUser = await User.create({
-    //     email: 'user1@mail.com',
-    //     password: 'P4ssword',
-    //   })
-    //   // await expect(postValidUser()).rejects.toThrow()
-    //   // expect(t).toThrow(TypeError)
-    // })
   })
   describe('User Login', () => {
     const postLoginUser = () =>
@@ -63,7 +54,7 @@ describe('User auth API', () => {
         email: 'user1@mail.com',
         password: 'P4ssword',
       })
-    test('should return 200 and token and cookies', async () => {
+    test('should return 200 and token', async () => {
       let userList = await User.findAll()
       expect(userList.length).toBe(0)
 
@@ -82,26 +73,6 @@ describe('User auth API', () => {
         userId: expect.any(Number),
         token: expect.any(String),
       })
-    })
-  })
-  describe('User Logout', () => {
-    test('should destroy cookies and redirect /', async () => {
-      let userList = await User.findAll()
-      expect(userList.length).toBe(0)
-
-      await User.create({
-        pseudo: 'dial95',
-        email: 'user1@mail.com',
-        password: await passwordHashed('P4ssword'),
-      })
-
-      userList = await User.findAll()
-      expect(userList.length).toBe(1)
-
-      const response = await request(app).get('/api/v1/users/logout')
-      expect(response.body).toStrictEqual({})
-      expect(response.headers['set-cookie'][0]).toMatch('Max-Age=0;')
-      expect(response.redirect).toBeTruthy()
     })
   })
 })

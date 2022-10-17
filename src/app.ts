@@ -19,9 +19,7 @@ connexion()
 
 const corsOptions = {
   origin: '*',
-  credential: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  preflightContinue: false,
+  credentials: true,
   methodes: 'GET,PUT,PATCH,POST,DELETE',
 }
 // middleware
