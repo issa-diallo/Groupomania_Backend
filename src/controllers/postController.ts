@@ -71,10 +71,12 @@ export const updatePost = async (req: Request, res: Response) => {
 
   const filename = post.picture?.split(RELATIVE_UPLOAD_POST_PATH)[1]
 
-  // Delete the image from the images folder.
-  fs.unlink(`${RELATIVE_UPLOAD_POST_PATH}${filename}`, () => {
-    /**/
-  })
+  if (postObject.picture !== post.picture) {
+    // Delete the image from the images folder.
+    fs.unlink(`${RELATIVE_UPLOAD_POST_PATH}${filename}`, () => {
+      /**/
+    })
+  }
 
   const postUpdate = await post.update({
     ...postObject,

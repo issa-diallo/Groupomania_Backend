@@ -1,4 +1,4 @@
-import { NextFunction, RequestHandler } from 'express'
+import { RequestHandler } from 'express'
 import { createToken } from '../authentification/loginToken'
 import User from '../models/user'
 import {
@@ -6,7 +6,7 @@ import {
   passwordHashed,
 } from '../authentification/passwordBcrypt'
 import { signUpErrors } from '../utils/errors'
-import { RequestAuth, TokenInterface } from '../authentification/types'
+import { TokenInterface } from '../authentification/types'
 import jwt from 'jsonwebtoken'
 
 export const createUser = async (

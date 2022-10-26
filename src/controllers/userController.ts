@@ -48,12 +48,14 @@ export const updateUser = async (req: RequestAuth, res: Response) => {
         }
       : { ...req.body }
 
-    const filename = user.picture.split(RELATIVE_UPLOAD_PROFIL_PATH)[1]
+    const filename = user.picture?.split(RELATIVE_UPLOAD_PROFIL_PATH)[1]
 
-    // Delete the image from the images folder.
-    fs.unlink(`${RELATIVE_UPLOAD_PROFIL_PATH}${filename}`, () => {
-      /**/
-    })
+    if (userObject.picture !== user.picture) {
+      // Delete the image from the images folder.
+      fs.unlink(`${RELATIVE_UPLOAD_PROFIL_PATH}${filename}`, () => {
+        /**/
+      })
+    }
 
     const userUpdate = await user.update({
       ...userObject,
@@ -74,6 +76,14 @@ export const deleteUser = async (req: RequestAuth, res: Response) => {
   try {
     const user: User = await getUser(req)
     userAllowedOr401(user, req.auth.userId, res)
+
+    const filename = user.picture?.split(RELATIVE_UPLOAD_PROFIL_PATH)[1]
+    if (filename) {
+      // Delete the image from the images folder.
+      fs.unlink(`${RELATIVE_UPLOAD_PROFIL_PATH}${filename}`, () => {
+        /**/
+      })
+    }
     await user.destroy()
     return res.status(204).json()
   } catch (error) {

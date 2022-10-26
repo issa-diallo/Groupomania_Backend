@@ -6,5 +6,5 @@ export const ABSOLUTE_UPLOAD_PROFIL_PATH = resolve(
   ROOT_DIR,
   'src/images/profil/'
 )
-export const RELATIVE_UPLOAD_POST_PATH = 'images/post/'
+export const RELATIVE_UPLOAD_POST_PATH = 'src/images/post/'
 export const ABSOLUTE_UPLOAD_POST_PATH = resolve(ROOT_DIR, 'src/images/post/')
