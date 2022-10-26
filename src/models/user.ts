@@ -37,7 +37,6 @@ class User extends Model {
   @Column
   password: string
 
-  @Default('./uploads/profil/random-user.png')
   @Column
   picture: string
 
