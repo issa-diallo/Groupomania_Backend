@@ -9,7 +9,9 @@ import fs from 'fs'
  * @Route /api/v1/post
  */
 export const readAllPost = async (req: Request, res: Response) => {
-  const posts = await Post.findAll()
+  const posts = await Post.findAll({
+    order: [['updatedAt', 'DESC']],
+  })
   res.status(200).json(posts)
 }
 
