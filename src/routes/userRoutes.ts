@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import multerConfig from '../middleware/multer-config'
-import { signUp, signIn } from '../controllers/authController'
+import { signUp, signIn, getUserToken } from '../controllers/authController'
 import {
   getAllUsers,
   userInfo,
@@ -14,6 +14,7 @@ const router = Router()
 // auth
 router.post('/register', signUp)
 router.post('/login', signIn)
+router.get('/jwtid', getUserToken)
 
 // user DB
 router.get('/', auth, getAllUsers)

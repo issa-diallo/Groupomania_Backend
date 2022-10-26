@@ -1,11 +1,13 @@
-import { RequestHandler } from 'express'
+import { NextFunction, RequestHandler } from 'express'
 import { createToken } from '../authentification/loginToken'
 import User from '../models/user'
 import {
   compareHashed,
   passwordHashed,
 } from '../authentification/passwordBcrypt'
-import { signInErrors, signUpErrors } from '../utils/errors'
+import { signUpErrors } from '../utils/errors'
+import { RequestAuth, TokenInterface } from '../authentification/types'
+import jwt from 'jsonwebtoken'
 
 export const createUser = async (
   pseudo: string,
@@ -54,5 +56,25 @@ export const signIn: RequestHandler = async (req, res) => {
     res.status(200).json({ userId: user.id, token })
   } catch (error) {
     return res.status(500).send({ error })
+  }
+}
+
+/**
+ * when the user will arrive on our application on the highest component
+ * (app.ts; react) we will test if we know his token so we can connect him automatically
+ */
+export const getUserToken: RequestHandler = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1]
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET)
+    // We extract the user ID of our token
+    const userId = (decodedToken as TokenInterface).userId
+    const user: User = await User.findByPk(userId, {
+      attributes: { exclude: ['password'] },
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    console.warn('No Token')
+    console.error(error)
   }
 }
