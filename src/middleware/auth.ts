@@ -5,12 +5,10 @@ import jwt from 'jsonwebtoken'
 export const auth = (req: RequestAuth, res: Response, next: NextFunction) => {
   let token
   // Get the token from the request header.
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.split(' ')[0] === 'Bearer'
-  ) {
+  if (req.headers.authorization) {
     token = req.headers.authorization.split(' ')[1]
-  } else {
+  }
+  if (!token) {
     return res.status(401).json({
       message: 'you did not provide an authentication token',
       name: 'Access denied',
