@@ -1,5 +1,5 @@
 import { Response, Request } from 'express'
-import { RELATIVE_UPLOAD_POST_PATH } from '../utils/helpers/constants'
+import { POST_PATH } from '../utils/helpers/constants'
 import Post from '../models/post'
 import { getPost } from '../utils/helpers/functions'
 import fs from 'fs'
@@ -34,9 +34,9 @@ export const createPost = async (req: Request, res: Response) => {
       ? {
           user_id: req.body.user_id,
           message: req.body.message,
-          picture: `${req.protocol}://${req.get(
-            'host'
-          )}/${RELATIVE_UPLOAD_POST_PATH}${req.file.filename}`,
+          picture: `${req.protocol}://${req.get('host')}/${POST_PATH}${
+            req.file.filename
+          }`,
           video: req.body.video,
         }
       : {
@@ -63,17 +63,17 @@ export const updatePost = async (req: Request, res: Response) => {
   const postObject = req.file
     ? {
         ...req.body,
-        picture: `${req.protocol}://${req.get(
-          'host'
-        )}/${RELATIVE_UPLOAD_POST_PATH}${req.file.filename}`,
+        picture: `${req.protocol}://${req.get('host')}/${POST_PATH}${
+          req.file.filename
+        }`,
       }
     : { ...req.body }
 
-  const filename = post.picture?.split(RELATIVE_UPLOAD_POST_PATH)[1]
+  const filename = post.picture?.split(POST_PATH)[1]
 
   if (postObject.picture !== post.picture) {
     // Delete the image from the images folder.
-    fs.unlink(`${RELATIVE_UPLOAD_POST_PATH}${filename}`, () => {
+    fs.unlink(`${POST_PATH}${filename}`, () => {
       /**/
     })
   }
@@ -91,11 +91,11 @@ export const updatePost = async (req: Request, res: Response) => {
 export const deletePost = async (req: Request, res: Response) => {
   const post: Post = await getPost(req)
 
-  const filename = post.picture?.split(RELATIVE_UPLOAD_POST_PATH)[1]
+  const filename = post.picture?.split(POST_PATH)[1]
 
   if (filename) {
     // Delete the image from the images folder.
-    fs.unlink(`${RELATIVE_UPLOAD_POST_PATH}${filename}`, () => {
+    fs.unlink(`${POST_PATH}${filename}`, () => {
       /**/
     })
   }
