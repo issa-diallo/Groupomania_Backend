@@ -3,6 +3,7 @@ import { POST_PATH } from '../utils/helpers/constants'
 import Post from '../models/post'
 import { getPost } from '../utils/helpers/functions'
 import fs from 'fs'
+import Comment from '../models/comment'
 
 /**
  * Get all post
@@ -101,4 +102,18 @@ export const deletePost = async (req: Request, res: Response) => {
   }
   await post.destroy()
   return res.status(204).json()
+}
+
+/**
+ * @Route /api/v1/post/1/comments
+ * Get all the comments of a post
+ */
+export const commentsOnePost = async (req: Request, res: Response) => {
+  const post: Post = await getPost(req)
+  try {
+    const comments = await Comment.findAll({ where: { post_id: post.id } })
+    res.status(200).json(comments)
+  } catch (error) {
+    return res.status(400).send({ error })
+  }
 }

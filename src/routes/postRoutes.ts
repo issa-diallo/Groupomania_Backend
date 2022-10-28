@@ -5,6 +5,7 @@ import {
   createPost,
   updatePost,
   deletePost,
+  commentsOnePost,
 } from '../controllers/postController'
 import { likePost, unLikePost } from '../controllers/likeController'
 import { auth } from '../middleware/auth'
@@ -15,6 +16,7 @@ const router = Router()
 // posts
 router.get('/', auth, readAllPost)
 router.get('/:id', auth, readPost)
+router.get('/:id/comments', auth, commentsOnePost)
 router.post('/', auth, multerPostConfig, createPost)
 router.put('/:id', auth, multerPostConfig, updatePost)
 router.delete('/:id', auth, multerPostConfig, deletePost)
