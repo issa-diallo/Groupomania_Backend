@@ -1,6 +1,6 @@
 import multer, { FileFilterCallback } from 'multer'
 import { mkdirSync } from '../utils/helpers/functions'
-import { ABSOLUTE_UPLOAD_PROFIL_PATH } from '../utils/helpers/constants'
+import { STORAGE_UPLOAD_PROFIL } from '../utils/helpers/constants'
 import { Request } from 'express'
 
 type DestinationCallback = (error: Error | null, destination: string) => void
@@ -13,8 +13,8 @@ const storage = multer.diskStorage({
     file: Express.Multer.File,
     callback: DestinationCallback
   ) => {
-    mkdirSync(ABSOLUTE_UPLOAD_PROFIL_PATH)
-    callback(null, ABSOLUTE_UPLOAD_PROFIL_PATH)
+    mkdirSync(STORAGE_UPLOAD_PROFIL)
+    callback(null, STORAGE_UPLOAD_PROFIL)
   },
   filename: (
     req: Request,

@@ -4,7 +4,7 @@ import { RequestAuth } from '../authentification/types'
 import User from '../models/user'
 import { getUser } from '../utils/helpers/functions'
 import fs from 'fs'
-import { RELATIVE_UPLOAD_PROFIL_PATH } from '../utils/helpers/constants'
+import { PROFIL_PATH } from '../utils/helpers/constants'
 
 /**
  * Get all users
@@ -39,20 +39,42 @@ export const updateUser = async (req: RequestAuth, res: Response) => {
     const user: User = await getUser(req)
     userAllowedOr401(user, req.auth.userId, res)
 
-    const userObject = req.file
-      ? {
-          ...req.body,
-          picture: `${req.protocol}://${req.get(
-            'host'
-          )}/${RELATIVE_UPLOAD_PROFIL_PATH}${req.file.filename}`,
-        }
-      : { ...req.body }
+    const userUpdate = await user.update({
+      bio: req.body.bio,
+      email: req.body.email,
+    })
 
-    const filename = user.picture?.split(RELATIVE_UPLOAD_PROFIL_PATH)[1]
+    return res.status(200).json(userUpdate)
+  } catch (error) {
+    console.error(error)
+    return res.status(500)
+  }
+}
+
+/**
+ * Insert a image
+ * @Route /api/v1/users/upload/:id - POST
+ */
+export const uploadUser = async (req: RequestAuth, res: Response) => {
+  try {
+    const user: User = await getUser(req)
+    userAllowedOr401(user, req.auth.userId, res)
+    if (req.file === null || req.file === undefined) {
+      return res
+        .status(400)
+        .json({ message: 'No file uploaded null or undefined' })
+    }
+    const userObject = {
+      picture: `${req.protocol}://${req.get('host')}${PROFIL_PATH}${
+        req.file.filename
+      }`,
+    }
+
+    const filename = user.picture?.split(PROFIL_PATH)[1]
 
     if (userObject.picture !== user.picture) {
       // Delete the image from the images folder.
-      fs.unlink(`${RELATIVE_UPLOAD_PROFIL_PATH}${filename}`, () => {
+      fs.unlink(`images/${filename}`, () => {
         /**/
       })
     }
@@ -77,10 +99,10 @@ export const deleteUser = async (req: RequestAuth, res: Response) => {
     const user: User = await getUser(req)
     userAllowedOr401(user, req.auth.userId, res)
 
-    const filename = user.picture?.split(RELATIVE_UPLOAD_PROFIL_PATH)[1]
+    const filename = user.picture?.split(PROFIL_PATH)[1]
     if (filename) {
       // Delete the image from the images folder.
-      fs.unlink(`${RELATIVE_UPLOAD_PROFIL_PATH}${filename}`, () => {
+      fs.unlink(`${PROFIL_PATH}${filename}`, () => {
         /**/
       })
     }
