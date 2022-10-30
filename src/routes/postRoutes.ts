@@ -7,7 +7,11 @@ import {
   deletePost,
   commentsOnePost,
 } from '../controllers/postController'
-import { likePost, unLikePost } from '../controllers/likeController'
+import {
+  getLikePost,
+  likePost,
+  unLikePost,
+} from '../controllers/likeController'
 import { auth } from '../middleware/auth'
 import multerPostConfig from '../middleware/multer-post-config'
 
@@ -21,7 +25,8 @@ router.post('/', auth, multerPostConfig, createPost)
 router.put('/:id', auth, multerPostConfig, updatePost)
 router.delete('/:id', auth, multerPostConfig, deletePost)
 // likes
+router.get('/like/:id', auth, getLikePost)
 router.post('/like/:id', auth, likePost)
-router.delete('/unlike/:id', auth, unLikePost)
+router.post('/unlike/:id', auth, unLikePost)
 
 export default router
