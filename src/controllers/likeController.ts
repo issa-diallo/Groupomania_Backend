@@ -13,7 +13,7 @@ export const likePost = async (req: RequestAuth, res: Response) => {
     post_id: parseInt(req.params.id),
   })
   const like = await newLike.save()
-  return res.status(200).json(like)
+  return res.status(201).json(like)
 }
 
 /**

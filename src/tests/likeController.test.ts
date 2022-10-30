@@ -47,7 +47,7 @@ describe('Like API', () => {
       })
       .set('Authorization', `Bearer ${token}`)
 
-    expect(response.status).toBe(200)
+    expect(response.status).toBe(201)
     expect(response.body).toEqual({
       id: expect.any(Number),
       user_id: 1,
@@ -73,12 +73,12 @@ describe('Like API', () => {
     expect(likeList.length).toBe(1)
 
     const response = await request(app)
-      .delete('/api/v1/post/unlike/1')
+      .post('/api/v1/post/unlike/1')
       .send({
         user_id: 1,
       })
       .set('Authorization', `Bearer ${token}`)
-    expect(response.status).toBe(204)
+    expect(response.status).toBe(201)
 
     const userList = await Like.findAll()
     expect(userList.length).toBe(0)
