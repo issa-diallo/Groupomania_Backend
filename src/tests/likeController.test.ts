@@ -49,11 +49,8 @@ describe('Like API', () => {
 
     expect(response.status).toBe(201)
     expect(response.body).toEqual({
-      id: expect.any(Number),
-      user_id: 1,
-      post_id: 1,
-      createdAt: expect.any(String),
-      updatedAt: expect.any(String),
+      message: expect.any(String),
+      count: expect.any(Number),
     })
   })
 
