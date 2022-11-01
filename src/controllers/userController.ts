@@ -22,7 +22,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const userInfo = async (req: RequestAuth, res: Response) => {
   try {
     const user: User = await getUser(req)
-    userAllowedOr401(user, req.auth.userId, res)
     return res.status(200).json(user)
   } catch (error) {
     console.error(error)
