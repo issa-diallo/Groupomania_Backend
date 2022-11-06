@@ -38,12 +38,10 @@ export const createPost = async (req: Request, res: Response) => {
           picture: `${req.protocol}://${req.get('host')}/${POST_PATH}${
             req.file.filename
           }`,
-          video: req.body.video,
         }
       : {
           user_id: req.body.user_id,
           message: req.body.message,
-          video: req.body.video,
         }
   )
   try {

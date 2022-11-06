@@ -71,7 +71,6 @@ describe('Post API', () => {
         user_id: newPost.user_id,
         message: newPost.message,
         picture: null,
-        video: null,
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       },
@@ -97,7 +96,6 @@ describe('Post API', () => {
       user_id: newPost.user_id,
       message: newPost.message,
       picture: null,
-      video: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     })
@@ -128,7 +126,6 @@ describe('Post API', () => {
       user_id: newPost.user_id,
       message: 'deuxième post modifié!!',
       picture: null,
-      video: null,
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     })

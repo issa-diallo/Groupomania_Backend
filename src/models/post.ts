@@ -24,9 +24,6 @@ class Post extends Model {
   @Column
   picture: string
 
-  @Column
-  video: string
-
   @BelongsTo(() => User)
   user: User
 
