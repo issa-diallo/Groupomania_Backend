@@ -30,12 +30,13 @@ export const readPost = async (req: Request, res: Response) => {
  * @Route /api/v1/post
  */
 export const createPost = async (req: Request, res: Response) => {
+  console.log(req.file)
   const newPost = new Post(
     req.file
       ? {
           user_id: req.body.user_id,
           message: req.body.message,
-          picture: `${req.protocol}://${req.get('host')}/${POST_PATH}${
+          picture: `${req.protocol}://${req.get('host')}${POST_PATH}${
             req.file.filename
           }`,
         }
@@ -62,7 +63,7 @@ export const updatePost = async (req: Request, res: Response) => {
   const postObject = req.file
     ? {
         ...req.body,
-        picture: `${req.protocol}://${req.get('host')}/${POST_PATH}${
+        picture: `${req.protocol}://${req.get('host')}${POST_PATH}${
           req.file.filename
         }`,
       }
