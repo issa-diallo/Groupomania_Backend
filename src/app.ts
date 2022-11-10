@@ -6,6 +6,7 @@ import postRoutes from './routes/postRoutes'
 import commentRoutes from './routes/commentRoutes'
 import cors from 'cors'
 import path from 'path'
+import { adminRouter, admin } from './config/admin'
 
 const app = express()
 
@@ -20,7 +21,9 @@ const corsOptions = {
   credentials: true,
   methodes: 'GET,PUT,PATCH,POST,DELETE',
 }
+
 // middleware
+app.use(admin.options.rootPath, adminRouter)
 app.use(cors(corsOptions))
 const dirName = path.join(__dirname, '../images')
 app.use('/images', express.static(dirName))
