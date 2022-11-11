@@ -30,7 +30,6 @@ export const readPost = async (req: Request, res: Response) => {
  * @Route /api/v1/post
  */
 export const createPost = async (req: Request, res: Response) => {
-  console.log(req.file)
   const newPost = new Post(
     req.file
       ? {
@@ -92,7 +91,6 @@ export const deletePost = async (req: Request, res: Response) => {
   const post: Post = await getPost(req)
 
   const filename = post.picture?.split(POST_PATH)[1]
-
   if (filename) {
     // Delete the image from the images folder.
     fs.unlink(`${POST_PATH}${filename}`, () => {
