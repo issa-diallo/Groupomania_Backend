@@ -3,6 +3,7 @@
 The project consists in building an internal social network for employees. The aim of this tool is to facilitate interactions between colleagues.
 
 - Frontend is available is: https://github.com/issa-diallo/Groupomania_frontend
+- Admin is available when the server is running: http://localhost:3000/admin
 
 ## Url
 
@@ -62,3 +63,4 @@ yarn lint
 - [Multer](https://github.com/expressjs/multer)
 - [Bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 - [CORS](https://github.com/expressjs/cors)
+- [AdminJs](https://docs.adminjs.co/installation/getting-started)
