@@ -3,6 +3,7 @@ import AdminJSExpress from '@adminjs/express'
 import * as AdminJSSequelize from '@adminjs/sequelize'
 import User from '../models/user'
 import Post from '../models/post'
+import { verifyPassword } from '../authentification/passwordBcrypt'
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -14,14 +15,18 @@ const adminOptions = {
 }
 const admin = new AdminJS(adminOptions)
 
-const DEFAULT_ADMIN = {
-  email: process.env.ADMIN_EMAIL,
-  password: process.env.ADMIN_PASSWORD,
-}
-
 const authenticate = async (email: string, password: string) => {
-  if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
-    return Promise.resolve(DEFAULT_ADMIN)
+  const user = await User.findOne({ where: { email } })
+  if (!user) {
+    return null
+  }
+  /* the compare function of bcrypt to compare the password entered
+   * by the user with the hash stored in the database and  true or false
+   */
+  const isPasswordValid =
+    user && (await verifyPassword(password, user.password))
+  if (isPasswordValid && user.isAdmin) {
+    return Promise.resolve({ email, password })
   }
   return null
 }
