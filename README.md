@@ -3,14 +3,17 @@
 The project consists in building an internal social network for employees. The aim of this tool is to facilitate interactions between colleagues.
 
 - Frontend is available is: https://github.com/issa-diallo/Groupomania_frontend
+
 - Admin is available when the server is running: http://localhost:3000/admin
   > **Note:** the admin username and password are automatically generated. You will find the information in the .env.example file
 
-## Url
-
-Add swagger here:
-
 ## Install && Run
+
+Copy the .env.example and edit it
+
+```sh
+cp .env.example .env
+```
 
 ### Option 1
 
@@ -51,17 +54,21 @@ yarn test
 ```sh
 yarn format
 yarn lint
+```
 
+## Troubleshooting
+
+### connect ECONNREFUSED 127.0.0.1:3306
+
+Run the SQL server e.g.
+
+```sh
+docker-compose up db
 ```
 
 ## Tech stack
 
 - [express](https://expressjs.com/)
 - [sequelize](https://sequelize.org/docs/v6/getting-started/#installing)
-- [sequelize-typescript](https://www.npmjs.com/package/sequelize-typescript#model-association)
+- [sequelize-typescript](https://www.npmjs.com/package/sequelize-typescript)
 - [jest](https://jestjs.io/)
-- [JWT](https://github.com/auth0/node-jsonwebtoken)
-- [Multer](https://github.com/expressjs/multer)
-- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js)
-- [CORS](https://github.com/expressjs/cors)
-- [AdminJs](https://docs.adminjs.co/installation/getting-started)

@@ -8,7 +8,6 @@ jobs:
 
     env:
       TOKEN_SECRET: token_secret
-      USER: root
       MYSQL_ROOT_PASSWORD: password
     steps:
       - name: Checkout repository
@@ -21,7 +20,6 @@ jobs:
         run: |
           cp .env.example .env
           sed s/TOKEN_SECRET=/TOKEN_SECRET=$TOKEN_SECRET/ -i .env
-          sed s/USER=/USER=$USER/ -i .env
           sed s/MYSQL_ROOT_PASSWORD=/MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD/ -i .env
 
       - name: Connect to the database
