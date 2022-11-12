@@ -4,9 +4,6 @@ The project consists in building an internal social network for employees. The a
 
 - Frontend is available is: https://github.com/issa-diallo/Groupomania_frontend
 
-- Admin is available when the server is running: http://localhost:3000/admin
-  > **Note:** the admin username and password are automatically generated. You will find the information in the .env.example file
-
 ## Install && Run
 
 Copy the .env.example and edit it
@@ -43,9 +40,15 @@ docker-compose build
 docker-compose up
 ```
 
+## :hammer: Create admin
+
+```sh
+yarn db:admin
+```
+
 ## :test_tube: Test
 
-```
+```sh
 yarn test
 ```
 
