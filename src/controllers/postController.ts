@@ -4,6 +4,7 @@ import Post from '../models/post'
 import { getPost } from '../utils/helpers/functions'
 import fs from 'fs'
 import Comment from '../models/comment'
+import { RequestAuth } from '../authentification/types'
 
 /**
  * Get all post
@@ -29,18 +30,18 @@ export const readPost = async (req: Request, res: Response) => {
  * Create a post
  * @Route /api/v1/post
  */
-export const createPost = async (req: Request, res: Response) => {
+export const createPost = async (req: RequestAuth, res: Response) => {
   const newPost = new Post(
     req.file
       ? {
-          user_id: req.body.user_id,
+          user_id: req.auth.userId,
           message: req.body.message,
           picture: `${req.protocol}://${req.get('host')}${POST_PATH}${
             req.file.filename
           }`,
         }
       : {
-          user_id: req.body.user_id,
+          user_id: req.auth.userId,
           message: req.body.message,
         }
   )
@@ -56,17 +57,21 @@ export const createPost = async (req: Request, res: Response) => {
  * Update a post
  * @Route /api/v1/post/:id
  */
-export const updatePost = async (req: Request, res: Response) => {
+export const updatePost = async (req: RequestAuth, res: Response) => {
   const post: Post = await getPost(req)
 
   const postObject = req.file
     ? {
-        ...req.body,
+        user_id: req.auth.userId,
+        message: req.body.message,
         picture: `${req.protocol}://${req.get('host')}${POST_PATH}${
           req.file.filename
         }`,
       }
-    : { ...req.body }
+    : {
+        user_id: req.auth.userId,
+        message: req.body.message,
+      }
 
   const filename = post.picture?.split(POST_PATH)[1]
 

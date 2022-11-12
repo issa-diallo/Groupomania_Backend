@@ -9,7 +9,7 @@ import { getLikeAndCount, getPost } from '../utils/helpers/functions'
  */
 export const likePost = async (req: RequestAuth, res: Response) => {
   const newLike = new Like({
-    user_id: parseInt(req.body.user_id),
+    user_id: req.auth.userId,
     post_id: parseInt(req.params.id),
   })
   await newLike.save()
@@ -24,7 +24,7 @@ export const likePost = async (req: RequestAuth, res: Response) => {
  */
 export const unLikePost = async (req: RequestAuth, res: Response) => {
   const like = await Like.findOne({
-    where: { post_id: req.params.id, user_id: req.body.user_id },
+    where: { post_id: req.params.id, user_id: req.auth.userId },
   })
   await like.destroy()
   const data = getLikeAndCount(req)
