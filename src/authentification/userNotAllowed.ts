@@ -6,7 +6,7 @@ export const userAllowedOr401 = (
   reqUserId: number,
   res: Response
 ) => {
-  if (user == null || user === undefined) {
+  if (user === null || user === undefined) {
     return res.status(401).json({ message: 'user does not exist ' })
   }
   if (user.id !== reqUserId) {

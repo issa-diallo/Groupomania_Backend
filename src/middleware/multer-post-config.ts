@@ -33,10 +33,10 @@ const multerFilter = (
   callback: FileFilterCallback
 ) => {
   if (
-    file.mimetype == 'image/png' ||
-    file.mimetype == 'image/jpg' ||
-    file.mimetype == 'image/wbep' ||
-    file.mimetype == 'image/jpeg'
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/wbep' ||
+    file.mimetype === 'image/jpeg'
   ) {
     callback(null, true)
   } else {
