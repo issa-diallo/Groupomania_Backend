@@ -3,7 +3,6 @@ import cookieParser from 'cookie-parser'
 import { connexion } from './database/sequelizeDb'
 import userRoutes from './routes/userRoutes'
 import postRoutes from './routes/postRoutes'
-import commentRoutes from './routes/commentRoutes'
 import cors from 'cors'
 import path from 'path'
 import { adminRouter, admin } from './config/admin'
@@ -34,6 +33,5 @@ app.use(cookieParser())
 // routes
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/post', postRoutes)
-app.use('/api/v1/comments', commentRoutes)
 
 export default app

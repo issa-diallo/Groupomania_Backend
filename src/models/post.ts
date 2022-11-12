@@ -7,7 +7,6 @@ import {
   HasMany,
   AllowNull,
 } from 'sequelize-typescript'
-import Comment from './comment'
 import Like from './like'
 import User from './user'
 
@@ -29,9 +28,6 @@ class Post extends Model {
 
   @HasMany(() => Like)
   posts: Like[]
-
-  @HasMany(() => Comment)
-  comments: Comment[]
 }
 
 export default Post

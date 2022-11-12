@@ -11,7 +11,6 @@ import {
   Default,
   HasMany,
 } from 'sequelize-typescript'
-import Comment from './comment'
 import Post from './post'
 
 @Table
@@ -50,9 +49,6 @@ class User extends Model {
 
   @HasMany(() => Post)
   posts: Post[]
-
-  @HasMany(() => Comment)
-  comments: Comment[]
 }
 
 export default User
