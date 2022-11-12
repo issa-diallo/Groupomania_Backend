@@ -2,10 +2,9 @@ import { RequestHandler } from 'express'
 import { createToken } from '../authentification/loginToken'
 import User from '../models/user'
 import {
-  compareHashed,
-  passwordHashed,
+  verifyPassword,
+  hashPassword,
 } from '../authentification/passwordBcrypt'
-import { signUpErrors } from '../utils/errors'
 import { TokenInterface } from '../authentification/types'
 import jwt from 'jsonwebtoken'
 
@@ -14,7 +13,7 @@ export const createUser = async (
   email: string,
   password: string
 ) =>
-  await User.create({ pseudo, email, password: await passwordHashed(password) })
+  await User.create({ pseudo, email, password: await hashPassword(password) })
 
 /**
  * @Route /api/v1/users/register - POST
@@ -57,7 +56,7 @@ export const signIn: RequestHandler = async (req, res) => {
      * by the user with the hash stored in the database and  true or false
      */
     const isPasswordValid =
-      user && (await compareHashed(req.body.password, user.password))
+      user && (await verifyPassword(req.body.password, user.password))
     if (!isPasswordValid) {
       return res.status(400).json({ message: invalid })
     }

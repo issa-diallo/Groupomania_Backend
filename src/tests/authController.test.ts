@@ -1,7 +1,7 @@
 import app from '../app'
 import request from 'supertest'
 import User from '../models/user'
-import { passwordHashed } from '../authentification/passwordBcrypt'
+import { hashPassword } from '../authentification/passwordBcrypt'
 import { sequelize } from '../database/sequelizeDb'
 import { connexion } from '../database/sequelizeDb'
 
@@ -61,7 +61,7 @@ describe('User auth API', () => {
       await User.create({
         pseudo: 'dial95',
         email: 'user1@mail.com',
-        password: await passwordHashed('P4ssword'),
+        password: await hashPassword('P4ssword'),
       })
 
       userList = await User.findAll()
