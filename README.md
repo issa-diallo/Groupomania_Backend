@@ -43,8 +43,17 @@ docker-compose up
 ## :hammer: Create admin
 
 ```sh
-yarn db:admin
+yarn db:create:admin
 ```
+
+Please go to BACKEND_URL + '/admin/login'
+
+```sh
+  example: http://localhost:3000/admin/login
+```
+
+- Email: `admin@admin.com`
+- Password: admin
 
 ## :hammer: Filled the db
 

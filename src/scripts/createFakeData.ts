@@ -18,7 +18,7 @@ const main = async () => {
     const post = new Post()
     post.user_id = user.id
     post.message = faker.lorem.paragraph()
-    post.picture = faker.image.sports(570, 570)
+    post.picture = faker.image.sports(570, 570, true)
     await post.save()
   }
 
