@@ -4,6 +4,7 @@ import * as AdminJSSequelize from '@adminjs/sequelize'
 import User from '../models/user'
 import Post from '../models/post'
 import { verifyPassword } from '../authentification/passwordBcrypt'
+import { sequelize } from '../database/sequelizeDb'
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -12,6 +13,7 @@ AdminJS.registerAdapter({
 const adminOptions = {
   // We pass Category to `resources`
   resources: [User, Post],
+  databases: [sequelize],
 }
 const admin = new AdminJS(adminOptions)
 

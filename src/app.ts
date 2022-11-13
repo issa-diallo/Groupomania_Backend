@@ -1,6 +1,5 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
-import { connection } from './database/sequelizeDb'
 import userRoutes from './routes/userRoutes'
 import postRoutes from './routes/postRoutes'
 import cors from 'cors'
@@ -8,12 +7,6 @@ import path from 'path'
 import { adminRouter, admin } from './config/admin'
 
 const app = express()
-
-/**
- * sequelize is a library that allows us
- * to connect to a MySQL database
- */
-connection()
 
 const corsOptions = {
   origin: '*',
