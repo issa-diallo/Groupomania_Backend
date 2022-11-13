@@ -17,8 +17,7 @@ export const sequelize = new Sequelize({
   logging: false,
 })
 
-// To test if the connection is OK
-export const connexion = async () => {
+export const connection = async () => {
   try {
     await sequelize.authenticate()
     console.info(

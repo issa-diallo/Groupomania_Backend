@@ -1,12 +1,12 @@
 import app from '../app'
 import request from 'supertest'
 import { createUser } from '../controllers/authController'
-import { connexion, sequelize } from '../database/sequelizeDb'
+import { connection, sequelize } from '../database/sequelizeDb'
 import Post from '../models/post'
 
 beforeEach(async () => {
   try {
-    await connexion()
+    await connection()
     await sequelize.sync({ force: true })
   } catch (error) {
     console.error(error)

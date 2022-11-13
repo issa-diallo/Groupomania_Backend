@@ -3,12 +3,12 @@ import request from 'supertest'
 import User from '../models/user'
 import { hashPassword } from '../authentification/passwordBcrypt'
 import { sequelize } from '../database/sequelizeDb'
-import { connexion } from '../database/sequelizeDb'
+import { connection } from '../database/sequelizeDb'
 
 // cleaning the table before each test
 beforeEach(async () => {
   try {
-    await connexion()
+    await connection()
     await sequelize.sync({ force: true })
   } catch (error) {
     console.error(error)

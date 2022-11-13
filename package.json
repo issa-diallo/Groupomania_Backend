@@ -11,7 +11,7 @@
     "format": "prettier --write src/**/*.{ts,js} *.{md,yml} .github/**/*.yml",
     "test": "jest --runInBand src/",
     "test:debug": "node --inspect-brk node_modules/.bin/jest src/ --runInBand --watchAll=false",
-    "db:admin": "ts-node-dev --respawn --watch src --transpile-only src/scripts/createAdmin.ts"
+    "db:create:admin": "ts-node-dev --transpile-only src/scripts/createAdmin.ts"
   },
   "dependencies": {
     "@adminjs/express": "^5.0.1",
