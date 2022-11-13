@@ -9,7 +9,15 @@ import {
 import Post from './post'
 import User from './user'
 
-@Table
+@Table({
+  indexes: [
+    {
+      name: 'UNIQUE_USER_LIKE',
+      unique: true,
+      fields: ['user_id', 'post_id'],
+    },
+  ],
+})
 class Like extends Model {
   @ForeignKey(() => User)
   @AllowNull(false)
