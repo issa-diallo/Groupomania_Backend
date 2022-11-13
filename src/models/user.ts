@@ -18,7 +18,7 @@ class User extends Model {
   @Unique
   @NotEmpty
   @AllowNull(false)
-  @Length({ min: 3, max: 9 })
+  @Length({ min: 2, max: 15 })
   @Column
   pseudo: string
 

@@ -46,6 +46,12 @@ docker-compose up
 yarn db:admin
 ```
 
+## :hammer: Filled the db
+
+```sh
+yarn fill:db
+```
+
 ## :test_tube: Test
 
 ```sh
