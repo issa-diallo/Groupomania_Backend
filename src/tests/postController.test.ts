@@ -4,6 +4,10 @@ import { createUser } from '../controllers/authController'
 import { connection, sequelize } from '../database/sequelizeDb'
 import Post from '../models/post'
 
+beforeAll(() => {
+  // keep the test logs clean by silencing the application logs
+  jest.spyOn(console, 'info').mockImplementation(() => undefined)
+})
 beforeEach(async () => {
   try {
     await connection()
@@ -12,6 +16,14 @@ beforeEach(async () => {
     console.error(error)
   }
 })
+// afterEach(async () => {
+//   try {
+//     sequelize.close()
+//   } catch (error) {
+//     console.error(error)
+//   }
+// })
+
 const login = (email: string, password: string) =>
   request(app).post('/api/v1/users/login').send({
     email,

@@ -5,7 +5,11 @@ import { hashPassword } from '../authentification/passwordBcrypt'
 import { sequelize } from '../database/sequelizeDb'
 import { connection } from '../database/sequelizeDb'
 
-// cleaning the table before each test
+beforeAll(() => {
+  // keep the test logs clean by silencing the application logs
+  jest.spyOn(console, 'info').mockImplementation(() => undefined)
+})
+
 beforeEach(async () => {
   try {
     await connection()
@@ -14,6 +18,13 @@ beforeEach(async () => {
     console.error(error)
   }
 })
+// afterEach(async () => {
+//   try {
+//     sequelize.close()
+//   } catch (error) {
+//     console.error(error)
+//   }
+// })
 
 describe('User auth API', () => {
   describe('User Registration', () => {
