@@ -6,6 +6,7 @@ import {
   BelongsTo,
   HasMany,
   AllowNull,
+  DataType,
 } from 'sequelize-typescript'
 import Like from './like'
 import User from './user'
@@ -17,7 +18,7 @@ class Post extends Model {
   @Column
   user_id: number
 
-  @Column
+  @Column(DataType.TEXT)
   message: string
 
   @Column
