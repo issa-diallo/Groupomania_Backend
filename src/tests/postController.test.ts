@@ -58,6 +58,7 @@ describe('Post API', () => {
       id: expect.any(Number),
       user_id: 1,
       message: 'message post !!',
+      picture: null,
       updatedAt: expect.any(String),
       createdAt: expect.any(String),
     })
