@@ -4,7 +4,7 @@ import fs from 'fs'
 import User from '../../models/user'
 import Post from '../../models/post'
 import Like from '../../models/like'
-import { RequestAuth } from '../authentification/types'
+import { RequestAuth } from '../../authentification/types'
 import { POST_PATH } from './constants'
 
 /**
