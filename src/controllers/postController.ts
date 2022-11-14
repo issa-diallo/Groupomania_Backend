@@ -1,5 +1,5 @@
 import { Response, Request } from 'express'
-import { POST_PATH } from '../utils/helpers/constants'
+import { POST_PATH, STORAGE_UPLOAD_POST } from '../utils/helpers/constants'
 import Post from '../models/post'
 import { getPictureUri, getPost } from '../utils/helpers/functions'
 import fs from 'fs'
@@ -60,7 +60,7 @@ export const updatePost = async (req: RequestAuth, res: Response) => {
 
   if (postObject.picture !== post.picture) {
     // Delete the image from the images folder.
-    fs.unlink(`${POST_PATH}${filename}`, () => {
+    fs.unlink(`${STORAGE_UPLOAD_POST}/${filename}`, () => {
       /**/
     })
   }
@@ -81,7 +81,7 @@ export const deletePost = async (req: Request, res: Response) => {
   const filename = post.picture?.split(POST_PATH)[1]
   if (filename) {
     // Delete the image from the images folder.
-    fs.unlink(`${POST_PATH}${filename}`, () => {
+    fs.unlink(`${STORAGE_UPLOAD_POST}/${filename}`, () => {
       /**/
     })
   }
