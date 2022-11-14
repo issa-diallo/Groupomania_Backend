@@ -4,6 +4,8 @@ import fs from 'fs'
 import User from '../../models/user'
 import Post from '../../models/post'
 import Like from '../../models/like'
+import { RequestAuth } from '../authentification/types'
+import { POST_PATH } from './constants'
 
 /**
  * Retrieve a user in the and exclude the password
@@ -46,4 +48,10 @@ export const getLikeAndCount = async (req: Request) => {
     where: { post_id: post.id },
   })
   return likes
+}
+
+export const getPictureUri = (req: RequestAuth) => {
+  return req.file
+    ? `${req.protocol}://${req.get('host')}${POST_PATH}${req.file.filename}`
+    : null
 }

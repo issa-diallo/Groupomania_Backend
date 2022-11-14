@@ -12,7 +12,7 @@
     "test": "jest --runInBand src/",
     "test:debug": "node --inspect-brk node_modules/.bin/jest src/ --runInBand --watchAll=false",
     "db:create:admin": "ts-node-dev --transpile-only src/scripts/createAdmin.ts",
-    "fill:db": "ts-node-dev --transpile-only src/scripts/createFakeData.ts"
+    "db:create:fakeData": "ts-node-dev --transpile-only src/scripts/createFakeData.ts"
   },
   "dependencies": {
     "@adminjs/express": "^5.0.1",

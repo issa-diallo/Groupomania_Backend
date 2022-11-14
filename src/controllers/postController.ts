@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
 import { POST_PATH } from '../utils/helpers/constants'
 import Post from '../models/post'
-import { getPost } from '../utils/helpers/functions'
+import { getPictureUri, getPost } from '../utils/helpers/functions'
 import fs from 'fs'
 import { RequestAuth } from '../authentification/types'
 
@@ -30,20 +30,11 @@ export const readPost = async (req: Request, res: Response) => {
  * @Route /api/v1/post
  */
 export const createPost = async (req: RequestAuth, res: Response) => {
-  const newPost = new Post(
-    req.file
-      ? {
-          user_id: req.auth.userId,
-          message: req.body.message,
-          picture: `${req.protocol}://${req.get('host')}${POST_PATH}${
-            req.file.filename
-          }`,
-        }
-      : {
-          user_id: req.auth.userId,
-          message: req.body.message,
-        }
-  )
+  const newPost = new Post({
+    user_id: req.auth.userId,
+    message: req.body.message,
+    picture: getPictureUri(req),
+  })
   try {
     const post = await newPost.save()
     return res.status(201).json(post)
@@ -59,18 +50,11 @@ export const createPost = async (req: RequestAuth, res: Response) => {
 export const updatePost = async (req: RequestAuth, res: Response) => {
   const post: Post = await getPost(req)
 
-  const postObject = req.file
-    ? {
-        user_id: req.auth.userId,
-        message: req.body.message,
-        picture: `${req.protocol}://${req.get('host')}${POST_PATH}${
-          req.file.filename
-        }`,
-      }
-    : {
-        user_id: req.auth.userId,
-        message: req.body.message,
-      }
+  const postObject = {
+    user_id: req.auth.userId,
+    message: req.body.message,
+    picture: getPictureUri(req),
+  }
 
   const filename = post.picture?.split(POST_PATH)[1]
 
