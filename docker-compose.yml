@@ -14,6 +14,7 @@ services:
       TOKEN_SECRET:
     volumes:
       - './src/:/src/src/:ro'
+      - './images/:/src/images/'
   db:
     image: mysql
     restart: always
