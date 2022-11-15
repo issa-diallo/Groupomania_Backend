@@ -43,7 +43,7 @@ docker-compose up
 ## :hammer: Create admin
 
 ```sh
-yarn db:create:fakeData
+yarn db:create:admin
 ```
 
 Please go to BACKEND_URL + '/admin/login'
@@ -58,7 +58,7 @@ Please go to BACKEND_URL + '/admin/login'
 ## :hammer: Filled the db
 
 ```sh
-yarn fill:db
+yarn db:create:fakeData
 ```
 
 ## :test_tube: Test
