@@ -53,16 +53,6 @@ export const updatePost = async (req: RequestAuth, res: Response) => {
   const postObject = {
     user_id: req.auth.userId,
     message: req.body.message,
-    picture: getPictureUri(req),
-  }
-
-  const filename = post.picture?.split(POST_PATH)[1]
-
-  if (postObject.picture !== post.picture) {
-    // Delete the image from the images folder.
-    fs.unlink(`${STORAGE_UPLOAD_POST}/${filename}`, () => {
-      /**/
-    })
   }
 
   const postUpdate = await post.update({
